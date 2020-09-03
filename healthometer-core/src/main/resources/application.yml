@@ -1,0 +1,32 @@
+spring:
+    application:
+        name: healthometer
+    jpa:
+        hibernate:
+            ddl-auto: update
+        properties:
+            hibernate:
+            dialect: org.hibernate.dialect.H2Dialect
+    flyway:
+        baseline-on-migrate: true
+        table: SCHEMA_HISTORY
+        locations:
+            - classpath:/db/migration
+            - classpath:/db/sample-data
+
+jwt:
+    header: Authorization
+    base64-secret: ZmQ0ZGI5NjQ0MDQwY2I4MjMxY2Y3ZmI3MjdhN2ZmMjNhODViOTg1ZGE0NTBjMGM4NDA5NzYxMjdjOWMwYWRmZTBlZjlhNGY3ZTg4Y2U3YTE1ODVkZDU5Y2Y3OGYwZWE1NzUzNWQ2YjFjZDc0NGMxZWU2MmQ3MjY1NzJmNTE0MzI=
+    token-validity-in-seconds: 36000000
+
+swagger:
+    enabled: false
+
+logging:
+    level:
+        org.springframework: ERROR
+        it.sogin.aigor: INFO
+    pattern:
+        console: "%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"
+        file: "%d %p %c{1.} [%t] %m%n"
+    file: healthometer.log
