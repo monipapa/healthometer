@@ -4,9 +4,9 @@ import lombok.Getter;
 
 @Getter
 public enum Status {
-  DELETED("deleted"),
-  ACTIVE("active"),
-  DISABLED("disabled");
+  DELETED("DELETED"),
+  ACTIVE("ACTIVE"),
+  DISABLED("DISABLED");
 
   private String status;
 

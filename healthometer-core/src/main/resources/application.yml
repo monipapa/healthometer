@@ -22,6 +22,9 @@ jwt:
 swagger:
     enabled: false
 
+server:
+    port: 8080
+
 logging:
     level:
         org.springframework: ERROR
