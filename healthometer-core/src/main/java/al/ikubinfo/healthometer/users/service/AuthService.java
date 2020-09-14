@@ -16,19 +16,20 @@ public class AuthService {
   private TokenProvider tokenProvider;
   private AuthenticationManagerBuilder authenticationManagerBuilder;
 
-  public AuthDto getToken(AuthDto authDto) {
+  public String getToken(AuthDto authDto) {
+    String tokenJWT = "";
     try {
       UsernamePasswordAuthenticationToken authenticationToken =
           new UsernamePasswordAuthenticationToken(authDto.getUsername(), authDto.getPassword());
       Authentication authentication =
           authenticationManagerBuilder.getObject().authenticate(authenticationToken);
       SecurityContextHolder.getContext().setAuthentication(authentication);
-      tokenProvider.createToken(authentication);
+      tokenJWT = tokenProvider.createToken(authentication);
       authDto.setValid(true);
     } catch (Exception e) {
       authDto.setValid(false);
     }
 
-    return authDto;
+    return tokenJWT;
   }
 }

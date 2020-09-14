@@ -27,11 +27,18 @@ spring:
             ddl-auto: none
 
 server:
-    port: 8081
+    port: 8443
 
 swagger:
     enabled: true
 
-
+logging:
+    level:
+        org.springframework: ERROR
+        it.sogin.aigor: INFO
+    pattern:
+        console: "%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"
+        file: "%d %p %c{1.} [%t] %m%n"
+    file: healthometer.log
 
 

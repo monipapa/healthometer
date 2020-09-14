@@ -53,7 +53,13 @@
             <version>${commons-text.version}</version>
         </dependency>
         <!-- end of apache commons -->
-
+		
+		<!-- JUnit 5 -->
+		<dependency>
+			<groupId>org.junit</groupId>
+			<artifactId>junit5-engine</artifactId>
+			<version>5.0.0-ALPHA</version>
+		</dependency>
 
         <!-- Mapstruct & Lombok -->
         <dependency>
