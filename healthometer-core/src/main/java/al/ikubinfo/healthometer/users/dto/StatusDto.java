@@ -2,8 +2,7 @@ package al.ikubinfo.healthometer.users.dto;
 
 import al.ikubinfo.commons.dto.BaseDto;
 import al.ikubinfo.healthometer.users.enums.Status;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter

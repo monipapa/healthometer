@@ -12,11 +12,6 @@ public interface StatusBidirectionalMapper
     extends DtoToEntityBidirectionalMapper<StatusDto, StatusEntity> {
 
   @Override
-  @Mappings({
-    @Mapping(source = "id", target = "id"),
-    @Mapping(source = "name", target = "name"),
-    @Mapping(source = "description", target = "description")
-  })
   StatusDto toDto(StatusEntity entity);
 
   @Override

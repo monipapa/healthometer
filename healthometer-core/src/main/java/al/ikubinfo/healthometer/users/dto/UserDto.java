@@ -1,12 +1,10 @@
 package al.ikubinfo.healthometer.users.dto;
 
 import al.ikubinfo.commons.dto.BaseDto;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
-
 public class UserDto extends BaseDto {
   private String username;
   private String firstname;
