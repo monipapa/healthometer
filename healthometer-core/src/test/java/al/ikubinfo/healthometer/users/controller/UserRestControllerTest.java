@@ -3,8 +3,8 @@ package al.ikubinfo.healthometer.users.controller;
 import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import al.ikubinfo.commons.utils.JsonUtils;
+import static org.junit.Assert.assertEquals;
 import al.ikubinfo.healthometer.HealthometerApp;
 import al.ikubinfo.healthometer.HealthometerTestSupport;
 import al.ikubinfo.healthometer.users.dto.AuthDto;
@@ -15,11 +15,9 @@ import al.ikubinfo.healthometer.users.enums.Status;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import org.springframework.http.*;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -29,7 +27,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 @SpringBootTest(classes = HealthometerApp.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 public class UserRestControllerTest extends HealthometerTestSupport {
-
 
     private static String tokenUser;
     private static String tokenAdmin;
@@ -78,33 +75,6 @@ public class UserRestControllerTest extends HealthometerTestSupport {
                 .andExpect(status().isForbidden());
     }
 
-//    @Test
-//    void shouldCreateUserTest() throws UnsupportedEncodingException {
-//        String firstname = RandomStringUtils.randomAlphanumeric(10);
-//        String lastname = RandomStringUtils.randomAlphanumeric(10);
-//        RoleDto roleDto = new RoleDto();
-//        roleDto.setId(2L);
-//        roleDto.setName(RandomStringUtils.randomAlphanumeric(10));
-//        StatusDto statusDto = new StatusDto();
-//        statusDto.setName(Status.ACTIVE);
-//        statusDto.setId(1L);
-//        UserDto userDto = new UserDto();
-//        userDto.setEmail(RandomStringUtils.randomAlphanumeric(10));
-//        userDto.setFirstname(firstname);
-//        userDto.setLastname(lastname);
-//        userDto.setUsername(RandomStringUtils.randomAlphanumeric(10));
-//        userDto.setPassword(RandomStringUtils.randomAlphanumeric(10));
-//        userDto.setRoleDto(roleDto);
-//        userDto.setStatusDto(statusDto);
-//        HttpHeaders httpHeaders = new HttpHeaders();
-//        httpHeaders.add(HttpHeaders.AUTHORIZATION, tokenAdmin);
-//        val response = createPost(baseURL, userDto, httpHeaders);
-//        assertNotNull(response);
-//        UserDto userDtoResult = JsonUtils.toObject(response.getResponse().getContentAsString(), UserDto.class);
-//        assertEquals(userDtoResult.getFirstname(), firstname);
-//        assertEquals(userDtoResult.getLastname(), lastname);
-//        assertEquals(response.getResponse().getStatus(), 200);
-//    }
 
     @Test
     void shouldCreateUserTest() throws Exception {
@@ -138,7 +108,6 @@ public class UserRestControllerTest extends HealthometerTestSupport {
     void shouldEditUserTest() throws Exception {
         String email = RandomStringUtils.randomAlphanumeric(10);
         String getUserUrl = baseURL + "/{id}";
-
         UserDto userDto = new UserDto();
         userDto.setEmail(email);
         userDto.setPassword("password");
@@ -149,7 +118,6 @@ public class UserRestControllerTest extends HealthometerTestSupport {
                                 .content(JsonUtils.toJsonString(userDto))
                                 .accept("application/json;charset=UTF-8")
                                 .header("Authorization", tokenAdmin)
-
                 )
                 .andExpect(status().isOk())
                 .andReturn();
@@ -157,8 +125,6 @@ public class UserRestControllerTest extends HealthometerTestSupport {
         assertNotNull(mvcResult);
         assertEquals(userDtoResult.getEmail(), email);
     }
-
-
 
     @Test
     public void deleteUserTest() throws Exception
@@ -169,6 +135,6 @@ public class UserRestControllerTest extends HealthometerTestSupport {
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
-    }
 
+    }
 }

@@ -1,7 +1,8 @@
 package al.ikubinfo.healthometer.users.dto;
 
 import al.ikubinfo.commons.dto.BaseDto;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Setter
