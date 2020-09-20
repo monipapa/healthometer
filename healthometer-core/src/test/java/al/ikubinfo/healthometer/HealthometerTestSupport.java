@@ -19,6 +19,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 @AutoConfigureMockMvc
 public class HealthometerTestSupport {
 
+
+
+
     @Autowired
     protected MockMvc mockMvc;
 
@@ -40,6 +43,101 @@ public class HealthometerTestSupport {
         }
         return resultDto;
     }
+
+
+
+    protected <INPUT, OUTPUT> OUTPUT createPost2(String token, INPUT dto) {
+        OUTPUT result = null;
+        String baseURL = "/users";
+        String getUserUrl = baseURL + "/{id}";
+        try {
+            result =
+                    (OUTPUT) mockMvc.perform( MockMvcRequestBuilders
+                            .post(baseURL)
+                            .content(JsonUtils.toJsonString(dto))
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .accept(MediaType.APPLICATION_JSON).header("Authorization",token))
+                            .andExpect(status().isOk())
+                    .andReturn();
+
+
+        } catch (Exception e) {
+            ExceptionUtils.rethrow(e);
+        }
+        return result;
+    }
+
+    protected <OUTPUT> OUTPUT getPost2(String token){
+        OUTPUT result = null;
+        String baseURL = "/users";
+        String getUserUrl = baseURL + "/{id}";
+        try {
+            result =
+                    (OUTPUT) mockMvc
+                            .perform(
+                                    MockMvcRequestBuilders.get(getUserUrl, 2).header("Authorization", token)
+                                            .accept(MediaType.APPLICATION_JSON))
+                            .andReturn();
+
+        } catch (Exception e) {
+            ExceptionUtils.rethrow(e);
+        }
+
+
+        return result;
+    }
+
+    protected <INPUT,OUTPUT> OUTPUT putPost(String url, String token, INPUT userDto){
+        OUTPUT result = null;
+        String baseURL = "/users";
+
+
+        try {
+            result =
+                    (OUTPUT) mockMvc
+                            .perform(
+                                    MockMvcRequestBuilders.put(url, 1)
+                                            .contentType(MediaType.APPLICATION_JSON)
+                                            .content(JsonUtils.toJsonString(userDto))
+                                            .accept("application/json;charset=UTF-8")
+                                            .header("Authorization", token)
+                            )
+                            .andReturn();
+
+        } catch (Exception e) {
+            ExceptionUtils.rethrow(e);
+        }
+
+
+        return result;
+
+
+    }
+
+    protected <OUTPUT> OUTPUT deletePost(String token){
+        OUTPUT result = null;
+        String baseURL = "/users";
+        String getUserUrl = baseURL + "/{id}";
+
+        try {
+            result =
+                    (OUTPUT) mockMvc
+                            .perform( MockMvcRequestBuilders.delete(getUserUrl, 1)
+                                    .header("Authorization", token)
+                                    .contentType(MediaType.APPLICATION_JSON)
+                                    .accept(MediaType.APPLICATION_JSON))
+                            .andReturn();
+
+        } catch (Exception e) {
+            ExceptionUtils.rethrow(e);
+        }
+
+
+        return result;
+
+
+    }
+
 
 
 }

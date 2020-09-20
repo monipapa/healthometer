@@ -27,7 +27,7 @@ spring:
             ddl-auto: none
 
 server:
-    port: 8080
+    port: 8443
 
 swagger:
     enabled: true
