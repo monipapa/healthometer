@@ -14,9 +14,11 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
-public class HealthometerTestSupport {
+public abstract class HealthometerTestSupport {
 
   @Autowired protected MockMvc mockMvc;
+
+  public abstract String getToken();
 
   protected <INPUT, OUTPUT> OUTPUT createPost(String url, INPUT dto, Class<OUTPUT> objectType) {
     OUTPUT resultDto = null;
@@ -25,8 +27,29 @@ public class HealthometerTestSupport {
           mockMvc
               .perform(
                   MockMvcRequestBuilders.post(url)
+                      .header("Authorization", getToken())
                       .contentType(MediaType.APPLICATION_JSON)
                       .content(JsonUtils.toJsonString(dto)))
+              .andExpect(status().isOk())
+              .andReturn();
+
+      resultDto = JsonUtils.toObject(result.getResponse().getContentAsString(), objectType);
+    } catch (Exception e) {
+      ExceptionUtils.rethrow(e);
+    }
+
+    return resultDto;
+  }
+
+  protected <OUTPUT> OUTPUT createGet(String url, Class<OUTPUT> objectType) {
+    OUTPUT resultDto = null;
+    try {
+      val result =
+          mockMvc
+              .perform(
+                  MockMvcRequestBuilders.get(url)
+                      .header("Authorization", getToken())
+                      .contentType(MediaType.APPLICATION_JSON))
               .andExpect(status().isOk())
               .andReturn();
 

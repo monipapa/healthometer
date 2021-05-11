@@ -1,15 +1,13 @@
 package al.ikubinfo.healthometer.users.enums;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor
 public enum Role {
   ADMIN("admin"),
-  EMPLOYEE("user");
+  USER("user");
 
-  private String role;
-
-  Role(String role) {
-    this.role = role;
-  }
+  String role;
 }

@@ -76,7 +76,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .headers()
         .frameOptions()
         .sameOrigin()
-
         .and()
         .sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -89,7 +88,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.DELETE, "/users/{^[\\d]$}")
         .hasAuthority("admin")
         .antMatchers(HttpMethod.GET, "/users/{^[\\d]$}")
-        .hasAuthority("user")
+        .hasAnyAuthority("user", "admin")
         .antMatchers(HttpMethod.PUT, "users/{^[\\d]$}/change-role/**")
         .hasAuthority("admin")
         .anyRequest()

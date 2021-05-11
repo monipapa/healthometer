@@ -1,16 +1,14 @@
 package al.ikubinfo.healthometer.users.enums;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor
 public enum Status {
   DELETED("deleted"),
   ACTIVE("active"),
   DISABLED("disabled");
 
-  private String status;
-
-  Status(String value) {
-    this.status = value;
-  }
+  String status;
 }

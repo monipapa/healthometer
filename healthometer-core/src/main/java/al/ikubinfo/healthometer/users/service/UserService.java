@@ -13,6 +13,7 @@ import al.ikubinfo.healthometer.users.repository.UserRepository;
 import java.util.Arrays;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import lombok.val;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -40,7 +41,7 @@ public class UserService implements UserDetailsService {
     if (!isLoggedInUser(id)) {
       throw new AccessDeniedException("Access denied");
     }
-    return userBidirectionalMapper.toDto(userRepository.findById(id).get());
+    return userBidirectionalMapper.toDto(getUser(id));
   }
 
   public UserDto createUser(UserDto userDto) {
@@ -52,7 +53,7 @@ public class UserService implements UserDetailsService {
   }
 
   public UserDto editUser(Long id, UserDto userDto) {
-    UserEntity user = userRepository.getOne(id);
+    val user = getUser(id);
     if (!authenticate(user, userDto.getPassword()) || !isLoggedInUser(id)) {
       throw new AccessDeniedException("Access denied");
     }
@@ -62,13 +63,13 @@ public class UserService implements UserDetailsService {
   }
 
   public void deleteUser(Long id) {
-    UserEntity user = userRepository.getOne(id);
-    user.setStatus(statusRepository.findByName(Status.DELETED.name()));
+    val user = getUser(id);
+    user.setStatus(statusRepository.findByName(Status.DELETED.getStatus()));
     userRepository.save(user);
   }
 
   public UserDto changePassword(Long id, PasswordDto passwordDto) {
-    UserEntity user = userRepository.getOne(id);
+    val user = getUser(id);
     if (!authenticate(user, passwordDto.getCurrentPassword()) || !isLoggedInUser(id)) {
       throw new AccessDeniedException("Access denied. Cannot change password");
     }
@@ -77,7 +78,7 @@ public class UserService implements UserDetailsService {
   }
 
   public UserDto changeRole(Long id, String newRole) {
-    UserEntity user = userRepository.getOne(id);
+    val user = getUser(id);
     user.setRole(roleRepository.findByName(newRole));
     return userBidirectionalMapper.toDto(userRepository.save(user));
   }
@@ -87,17 +88,23 @@ public class UserService implements UserDetailsService {
   }
 
   private boolean isLoggedInUser(Long id) {
-    UserEntity user = userRepository.findByUsername(SecurityUtils.getCurrentUsername().get());
+    val user = userRepository.findByUsername(SecurityUtils.getCurrentUsername().get());
     return id.equals(user.getId());
   }
 
   @Override
   @Transactional
   public UserDetails loadUserByUsername(String username) {
-    UserEntity user = userRepository.findByUsername(username);
+    val user = userRepository.findByUsername(username);
     List<GrantedAuthority> role =
         Arrays.asList(new SimpleGrantedAuthority(user.getRole().getName()));
     return new org.springframework.security.core.userdetails.User(
         user.getUsername(), user.getPassword(), role);
+  }
+
+  private UserEntity getUser(Long id) {
+    return userRepository
+        .findById(id)
+        .orElseThrow(() -> new RuntimeException("Invalid user with id: " + id));
   }
 }
