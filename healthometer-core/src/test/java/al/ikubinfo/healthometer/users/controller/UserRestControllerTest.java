@@ -6,11 +6,13 @@ import al.ikubinfo.healthometer.HealthometerTestSupport;
 import al.ikubinfo.healthometer.users.dto.*;
 import lombok.val;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,19 +22,39 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class UserRestControllerTest extends HealthometerTestSupport {
 
   private String URL = "/users";
-  @Autowired
-  private BCryptPasswordEncoder bCryptPasswordEncoder;
+  private static String TOKEN = "";
+  @Autowired private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+  @BeforeAll
+  static void setup(@Autowired MockMvc mockMvc) {
+    val authDto = AuthDto.builder().username("admin").password("password").valid(false).build();
+    try {
+      TOKEN =
+          mockMvc
+              .perform(
+                  MockMvcRequestBuilders.post("/auth")
+                      .contentType(MediaType.APPLICATION_JSON)
+                      .content(JsonUtils.toJsonString(authDto)))
+              .andExpect(status().isOk())
+              .andReturn()
+              .getResponse()
+              .getHeader("Authorization");
+
+    } catch (Exception e) {
+      ExceptionUtils.rethrow(e);
+      TOKEN = "";
+    }
+  }
 
   @Test
   void getValidUser() {
-    val response = createGet(URL + "/1", UserDto.class);
+    val response = createGet(URL + "/1", UserDto.class, TOKEN);
     assertEquals("admin@ikubinfo.al", response.getEmail());
   }
 
   @Test
   void getInvalidUser() {
-    val response = createGet(URL + "/1", UserDto.class);
+    val response = createGet(URL + "/1", UserDto.class, TOKEN);
     assertEquals(false, "admin1@ikubinfo.al".equals(response.getEmail()));
   }
 
@@ -51,7 +73,7 @@ public class UserRestControllerTest extends HealthometerTestSupport {
     newUser.setFirstname("Name");
     newUser.setLastname("Surname");
     newUser.setRoleDto(roleDto);
-    val response = createPost(URL, newUser, UserDto.class);
+    val response = createPost(URL, newUser, UserDto.class, TOKEN);
     assertEquals("new_user@gmail.com", response.getEmail());
   }
 
@@ -70,7 +92,7 @@ public class UserRestControllerTest extends HealthometerTestSupport {
     newUser.setFirstname("Name");
     newUser.setLastname("Surname");
     newUser.setRoleDto(roleDto);
-    val response = createPost(URL, newUser, UserDto.class);
+    val response = createPost(URL, newUser, UserDto.class, TOKEN);
     assertNotEquals("new_user1@gmail.com", response.getEmail());
   }
 
@@ -88,7 +110,7 @@ public class UserRestControllerTest extends HealthometerTestSupport {
     newUser.setStatusDto(statusDto);
     newUser.setFirstname("Name");
     newUser.setLastname("Surname");
-    assertThrows(Exception.class, () -> createPost(URL, newUser, UserDto.class));
+    assertThrows(Exception.class, () -> createPost(URL, newUser, UserDto.class, TOKEN));
   }
 
   @Test
@@ -96,7 +118,7 @@ public class UserRestControllerTest extends HealthometerTestSupport {
     UserDto userDto = new UserDto();
     userDto.setEmail("new_user@gmail.com");
     userDto.setPassword("password");
-    val response = createPut(URL + "/1", userDto, UserDto.class);
+    val response = createPut(URL + "/1", userDto, UserDto.class, TOKEN);
     assertEquals("new_user@gmail.com", response.getEmail());
   }
 
@@ -105,30 +127,29 @@ public class UserRestControllerTest extends HealthometerTestSupport {
     UserDto userDto = new UserDto();
     userDto.setEmail("new_user@gmail.com");
     userDto.setPassword("password");
-    val response = createPut(URL + "/1", userDto, UserDto.class);
+    val response = createPut(URL + "/1", userDto, UserDto.class, TOKEN);
     assertNotEquals("admin@gmail.com", response.getEmail());
   }
 
   @Test
   void deleteValidUser() {
-    assertAll(() -> createDelete(URL + "/1")
-    );
+    assertAll(() -> createDelete(URL + "/1", TOKEN));
   }
 
   @Test
   void deleteInvalidUser() {
-    assertThrows(Exception.class, () -> createDelete(URL + "/100"));
+    assertThrows(Exception.class, () -> createDelete(URL + "/100", TOKEN));
   }
 
   @Test
   void changeValidRole() {
-    val response = createPut(URL + "/1/change-role/user", new UserDto(), UserDto.class);
+    val response = createPut(URL + "/1/change-role/user", new UserDto(), UserDto.class, TOKEN);
     assertEquals("user", response.getRoleDto().getName());
   }
 
   @Test
   void changeNotValidRole() {
-    val response = createPut(URL + "/1/change-role/user", new UserDto(), UserDto.class);
+    val response = createPut(URL + "/1/change-role/user", new UserDto(), UserDto.class, TOKEN);
     assertNotEquals("admin", response.getRoleDto().getName());
   }
 
@@ -138,7 +159,7 @@ public class UserRestControllerTest extends HealthometerTestSupport {
     passwordDto.setCurrentPassword("password");
     passwordDto.setNewPassword("password1");
 
-    val response = createPut(URL + "/1/change-password", passwordDto, UserDto.class);
+    val response = createPut(URL + "/1/change-password", passwordDto, UserDto.class, TOKEN);
     assertEquals(true, bCryptPasswordEncoder.matches("password1", response.getPassword()));
   }
 
@@ -148,27 +169,7 @@ public class UserRestControllerTest extends HealthometerTestSupport {
     passwordDto.setCurrentPassword("password");
     passwordDto.setNewPassword("password1");
 
-    val response = createPut(URL + "/1/change-password", passwordDto, UserDto.class);
+    val response = createPut(URL + "/1/change-password", passwordDto, UserDto.class, TOKEN);
     assertEquals(false, bCryptPasswordEncoder.matches("password", response.getPassword()));
-  }
-
-  @Override
-  public String getToken() {
-    val authDto = AuthDto.builder().username("admin").password("password").valid(false).build();
-    try {
-      return mockMvc
-              .perform(
-                      MockMvcRequestBuilders.post("/auth")
-                              .contentType(MediaType.APPLICATION_JSON)
-                              .content(JsonUtils.toJsonString(authDto)))
-          .andExpect(status().isOk())
-          .andReturn()
-          .getResponse()
-          .getHeader("Authorization");
-
-    } catch (Exception e) {
-      ExceptionUtils.rethrow(e);
-      return "";
-    }
   }
 }
