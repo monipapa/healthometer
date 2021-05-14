@@ -1,8 +1,5 @@
 package al.ikubinfo.healthometer.users.controller;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import al.ikubinfo.commons.utils.JsonUtils;
 import al.ikubinfo.healthometer.HealthometerApp;
 import al.ikubinfo.healthometer.HealthometerTestSupport;
@@ -18,6 +15,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Transactional;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(classes = HealthometerApp.class)
 @Transactional
@@ -61,7 +61,7 @@ public class UserRestControllerTest extends HealthometerTestSupport {
   }
 
   @Test
-  void createValidUser() {
+  void createValidUser1() {
     StatusDto statusDto = new StatusDto();
     statusDto.setId(1L);
     RoleDto roleDto = new RoleDto();
@@ -77,6 +77,22 @@ public class UserRestControllerTest extends HealthometerTestSupport {
     newUser.setRoleDto(roleDto);
     val response = createPost(URL, newUser, UserDto.class, TOKEN);
     assertEquals("new_user@gmail.com", response.getEmail());
+  }
+
+  @Test
+  void createValidUser2() {
+    StatusDto statusDto = new StatusDto();
+    statusDto.setId(1L);
+    UserDto newUser = new UserDto();
+    newUser.setId(1l);
+    newUser.setEmail("admin@gmail.com");
+    newUser.setPassword("password");
+    newUser.setUsername("admin");
+    newUser.setStatusDto(statusDto);
+    newUser.setFirstname("Name");
+    newUser.setLastname("Surname");
+    val response = createPost(URL, newUser, UserDto.class, TOKEN);
+    assertEquals("active", response.getStatusDto().getName());
   }
 
   @Test
@@ -102,17 +118,16 @@ public class UserRestControllerTest extends HealthometerTestSupport {
   void createInvalidUser2() {
     StatusDto statusDto = new StatusDto();
     statusDto.setId(1L);
-    RoleDto roleDto = new RoleDto();
-    roleDto.setId(1L);
     UserDto newUser = new UserDto();
     newUser.setId(1l);
-    newUser.setEmail("new_user@gmail.com");
+    newUser.setEmail("admin@gmail.com");
     newUser.setPassword("password");
-    newUser.setUsername("new_user");
+    newUser.setUsername("admin");
     newUser.setStatusDto(statusDto);
     newUser.setFirstname("Name");
     newUser.setLastname("Surname");
-    assertThrows(Exception.class, () -> createPost(URL, newUser, UserDto.class, TOKEN));
+    val response = createPost(URL, newUser, UserDto.class, TOKEN);
+    assertNotEquals("disabled", response.getStatusDto().getName());
   }
 
   @Test
