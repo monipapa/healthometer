@@ -1,5 +1,7 @@
 package al.ikubinfo.healthometer;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import al.ikubinfo.commons.utils.JsonUtils;
 import lombok.val;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -9,8 +11,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ActiveProfiles("test")
 @AutoConfigureMockMvc

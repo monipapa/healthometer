@@ -79,7 +79,7 @@ public class UserService implements UserDetailsService {
 
   public UserDto changeRole(Long id, String newRole) {
     val user = getUser(id);
-    user.setRole(roleRepository.findByName(newRole));
+    // user.setRole(roleRepository.findByName(newRole));
     return userBidirectionalMapper.toDto(userRepository.save(user));
   }
 
