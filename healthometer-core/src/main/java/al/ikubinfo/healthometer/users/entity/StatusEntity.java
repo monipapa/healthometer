@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "status")
+@Table(schema = "healthometer",name = "status")
 @Getter
 @Setter
 @NoArgsConstructor

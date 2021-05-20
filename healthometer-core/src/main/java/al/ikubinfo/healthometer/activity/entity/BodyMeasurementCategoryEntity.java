@@ -8,20 +8,21 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(schema = "healthometer", name = "unit_subcategories")
+@Table(schema = "healthometer", name = "body_measurement_categories")
 @Getter
 @Setter
-public class UnitSubcategoryEntity extends BaseEntity {
+public class BodyMeasurementCategoryEntity extends BaseEntity {
+
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "description")
+    private String description;
 
     @ManyToOne
     @JoinColumn(name = "unit_categories_id", referencedColumnName = "id", nullable = false)
     @NotNull
     private UnitCategoryEntity unitCategoryEntity;
 
-    @Column(name = "name")
-    private String name;
-
-    @Column(name = "abbreviation")
-    private String abbreviation;
 
 }

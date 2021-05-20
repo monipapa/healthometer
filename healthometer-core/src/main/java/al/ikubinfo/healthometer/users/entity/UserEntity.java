@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "users")
+@Table(schema = "healthometer",name = "users")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -29,10 +29,10 @@ public class UserEntity extends BaseEntity {
   private String lastname;
 
   @ManyToOne
-  @JoinColumn(name = "user_role")
+  @JoinColumn(name = "user_role_id")
   private RoleEntity role;
 
   @ManyToOne
-  @JoinColumn(name = "user_status")
+  @JoinColumn(name = "user_status_id")
   private StatusEntity status;
 }

@@ -11,5 +11,6 @@ CREATE TABLE healthometer.user_body_measurement
     user_created                 integer,
     user_updated                 integer,
     foreign key (body_measurement_category_id) references healthometer.body_measurement_categories (id),
-    foreign key (unit_subcategories_id) references healthometer.unit_subcategories (id)
+    foreign key (unit_subcategories_id) references healthometer.unit_subcategories (id),
+    foreign key (user_id) references healthometer.users (id)
 );
