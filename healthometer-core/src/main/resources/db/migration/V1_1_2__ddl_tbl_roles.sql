@@ -8,6 +8,6 @@ CREATE TABLE healthometer.roles
     description  varchar(100) DEFAULT NULL,
     date_created timestamp,
     date_updated timestamp,
-    user_created integer,
-    user_updated integer
+    user_created varchar(45),
+    user_updated varchar(45)
 );

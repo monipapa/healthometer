@@ -15,8 +15,12 @@
  */
 package al.ikubinfo.commons.entity;
 
-import java.io.Serializable;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * Simple JavaBean domain object with an id property. Used as a base class for objects needing this
@@ -26,19 +30,24 @@ import javax.persistence.*;
  * @author Juergen Hoeller
  */
 @MappedSuperclass
-//@Inheritance(strategy = InheritanceType.JOINED)
+@Getter
+@Setter
 public class BaseEntity implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  public Long getId() {
-    return id;
-  }
+  @Column(name = "user_created")
+  private String userCreated;
 
-  public void setId(Long id) {
-    this.id = id;
-  }
+  @Column(name = "date_created")
+  private LocalDateTime dateCreated;
+
+  @Column(name = "user_updated")
+  private String userUpdated;
+
+  @Column(name = "date_updated")
+  private LocalDateTime dateUpdated;
 
   public boolean isNew() {
     return this.id == null;

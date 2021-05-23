@@ -6,6 +6,6 @@ CREATE TABLE healthometer.unit_subcategories
     abbreviation       varchar(10),
     date_created       timestamp,
     date_updated       timestamp,
-    user_created       integer,
-    user_updated       integer
+    user_created       varchar(45),
+    user_updated       varchar(45)
 );

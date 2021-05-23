@@ -13,8 +13,8 @@ CREATE TABLE healthometer.users
     date_created timestamp,
     date_updated timestamp,
     user_role_id    integer      NOT NULL,
-    user_created integer,
-    user_updated integer,
+    user_created varchar(45),
+    user_updated varchar(45),
     foreign key (user_status_id) references healthometer.status (id),
     foreign key (user_role_id) references healthometer.roles (id)
 );

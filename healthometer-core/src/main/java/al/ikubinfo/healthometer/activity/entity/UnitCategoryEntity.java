@@ -1,12 +1,12 @@
 package al.ikubinfo.healthometer.activity.entity;
 
 import al.ikubinfo.commons.entity.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(schema = "healthometer", name = "unit_categories")
@@ -23,4 +23,7 @@ public class UnitCategoryEntity extends BaseEntity {
     @Column(name = "default_unit")
     private String defaultUnit;
 
+    @OneToMany(mappedBy = "unitCategoryEntity", fetch = FetchType.LAZY)
+    @JsonManagedReference
+    List<UnitSubcategoryEntity> subcategoryEntityList ;
 }
