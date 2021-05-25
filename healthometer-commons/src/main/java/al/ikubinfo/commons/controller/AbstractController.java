@@ -14,7 +14,7 @@ public class AbstractController<
         DTO extends BaseDto,
         SERVICE extends AbstractService> {
 
-    @GetMapping
+   /* @GetMapping
     public ResponseEntity<List<DTO>> getList() {
         return new ResponseEntity<>(SERVICE.getList(), HttpStatus.OK);
     }
@@ -41,5 +41,5 @@ public class AbstractController<
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
         SERVICE.delete(id);
-    }
+    }*/
 }
