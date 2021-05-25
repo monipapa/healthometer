@@ -4,71 +4,97 @@ import al.ikubinfo.commons.dto.BaseDto;
 import al.ikubinfo.commons.entity.BaseEntity;
 import al.ikubinfo.commons.mapper.DtoToEntityBidirectionalMapper;
 import al.ikubinfo.commons.security.SecurityUtils;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
-import javax.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Transactional
 @AllArgsConstructor
 public abstract class AbstractService<
-    ENTITY extends BaseEntity,
-    DTO extends BaseDto,
-    MAPPER extends DtoToEntityBidirectionalMapper<DTO, ENTITY>,
-    REPOSITORY extends JpaRepository<ENTITY, Long>> {
-  protected final REPOSITORY repository;
-  protected final MAPPER mapper;
+        ENTITY extends BaseEntity,
+        DTO extends BaseDto,
+        MAPPER extends DtoToEntityBidirectionalMapper<DTO, ENTITY>,
+        REPOSITORY extends JpaRepository<ENTITY, Long>> {
+    protected final REPOSITORY repository;
+    protected final MAPPER mapper;
 
-  public List<DTO> getList() {
-    return repository.findAll().stream().map(mapper::toDto).collect(Collectors.toList());
-  }
-
-  public DTO getSingle(Long id) {
-    return mapper.toDto(getEntity(id));
-  }
-
-  public ENTITY getEntity(Long id) {
-    if (id == null) {
-      throw new RuntimeException("Unit category id value is null!");
+    public List<DTO> getList() {
+        doGetList();
+        return repository.findAll().stream().map(mapper::toDto).collect(Collectors.toList());
     }
-    return repository
-        .findById(id)
-        .orElseThrow(
-            () -> {
-              throw new EntityNotFoundException("Entity for id - " + id + " not found");
-            });
-  }
 
-  public ENTITY save(DTO unitCategoryDto) {
-    ENTITY entity = mapper.toEntity(unitCategoryDto);
-    entity.setDateCreated(LocalDateTime.now());
-    entity.setUserCreated(
-        SecurityUtils.getCurrentUsername()
-            .orElseThrow(
-                () -> {
-                  throw new SecurityException(" You are not allowed to add this element!");
-                }));
-    return repository.save(entity);
-  }
+    public DTO getSingle(Long id) {
+        ENTITY entity = getEntity(id);
+        doGetSingle(entity);
+        return mapper.toDto(entity);
+    }
 
-  public ENTITY update(Long id, DTO unitCategoryDto) {
-    ENTITY entity = mapper.toEntity(unitCategoryDto);
-    entity.setUserUpdated(
-        SecurityUtils.getCurrentUsername()
-            .orElseThrow(
-                () -> {
-                  throw new SecurityException("You are not allowed to update this unit category!");
-                }));
-    entity.setDateUpdated(LocalDateTime.now());
-    entity.setId(id);
-    repository.save(entity);
-    return entity;
-  }
+    public ENTITY getEntity(Long id) {
+        if (id == null) {
+            throw new RuntimeException("Id value is null!");
+        }
+        return repository
+                .findById(id)
+                .orElseThrow(
+                        () -> {
+                            throw new EntityNotFoundException("Entity for id - " + id + " not found");
+                        });
+    }
 
-  public void delete(Long id) {
-    repository.deleteById(id);
-  }
+    @Transactional
+    protected ENTITY save(DTO unitCategoryDto) {
+        ENTITY entity = mapper.toEntity(unitCategoryDto);
+        entity.setDateCreated(LocalDateTime.now());
+        entity.setUserCreated(
+                SecurityUtils.getCurrentUsername()
+                        .orElseThrow(
+                                () -> {
+                                    throw new SecurityException(" You are not allowed to add this element!");
+                                }));
+        doSave(entity);
+        return repository.save(entity);
+    }
+
+    @Transactional
+    public ENTITY update(Long id, DTO unitCategoryDto) {
+        ENTITY entity = mapper.toEntity(unitCategoryDto);
+        doUpdate(entity);
+        entity.setUserUpdated(
+                SecurityUtils.getCurrentUsername()
+                        .orElseThrow(
+                                () -> {
+                                    throw new SecurityException("You are not allowed to update this unit category!");
+                                }));
+        entity.setDateUpdated(LocalDateTime.now());
+        entity.setId(id);
+        repository.save(entity);
+        return entity;
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        ENTITY entity = getEntity(id);
+        doDelete(entity);
+        repository.delete(entity);
+    }
+
+    public void doGetList() {
+    }
+
+    public void doGetSingle(ENTITY entity) {
+    }
+
+    public void doSave(ENTITY entity) {
+    }
+
+    public void doUpdate(ENTITY entity) {
+    }
+
+    public void doDelete(ENTITY entity) {
+    }
 }
