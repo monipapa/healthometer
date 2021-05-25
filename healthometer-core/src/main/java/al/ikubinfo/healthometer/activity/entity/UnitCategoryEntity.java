@@ -13,6 +13,9 @@ import java.util.List;
 @Getter
 @Setter
 public class UnitCategoryEntity extends BaseEntity {
+    @OneToMany(mappedBy = "unitCategoryEntity", fetch = FetchType.LAZY)
+    @JsonManagedReference
+    List<UnitSubcategoryEntity> subcategoryEntityList;
 
     @Column(name = "name")
     private String name;
@@ -22,8 +25,4 @@ public class UnitCategoryEntity extends BaseEntity {
 
     @Column(name = "default_unit")
     private String defaultUnit;
-
-    @OneToMany(mappedBy = "unitCategoryEntity", fetch = FetchType.LAZY)
-    @JsonManagedReference
-    List<UnitSubcategoryEntity> subcategoryEntityList ;
 }

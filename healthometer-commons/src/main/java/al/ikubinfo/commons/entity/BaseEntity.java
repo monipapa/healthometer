@@ -15,12 +15,11 @@
  */
 package al.ikubinfo.commons.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-
-import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import javax.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Simple JavaBean domain object with an id property. Used as a base class for objects needing this

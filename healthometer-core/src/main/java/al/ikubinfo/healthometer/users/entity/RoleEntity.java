@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(schema = "healthometer",name = "roles")
+@Table(schema = "healthometer", name = "roles")
 @Getter
 @Setter
 public class RoleEntity extends BaseEntity {

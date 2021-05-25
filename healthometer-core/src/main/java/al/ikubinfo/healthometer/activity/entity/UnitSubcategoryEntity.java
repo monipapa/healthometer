@@ -13,7 +13,6 @@ import javax.persistence.*;
 @Getter
 @Setter
 public class UnitSubcategoryEntity extends BaseEntity {
-
     @ManyToOne
     @JoinColumn(name = "unit_categories_id", referencedColumnName = "id", nullable = false)
     @NotNull
@@ -25,5 +24,4 @@ public class UnitSubcategoryEntity extends BaseEntity {
 
     @Column(name = "abbreviation")
     private String abbreviation;
-
 }

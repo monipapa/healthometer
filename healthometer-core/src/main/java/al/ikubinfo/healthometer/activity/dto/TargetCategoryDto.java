@@ -6,8 +6,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UnitSubcategoryDto extends BaseDto {
-  private UnitCategoryDto unitCategoryDto;
-  private String name;
-  private String abbreviation;
+public class TargetCategoryDto extends BaseDto {
+    private String name;
+    private String description;
+    private UnitCategoryDto unitCategoryDto;
 }

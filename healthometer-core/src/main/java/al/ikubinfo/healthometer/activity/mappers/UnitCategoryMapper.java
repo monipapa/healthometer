@@ -9,20 +9,20 @@ import org.mapstruct.Mapping;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
 @Mapper(
-        componentModel = "spring",
-        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-public interface UnitCategoryMapper extends DtoToEntityBidirectionalMapper<UnitCategoryDto, UnitCategoryEntity> {
+    componentModel = "spring",
+    nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+public interface UnitCategoryMapper
+    extends DtoToEntityBidirectionalMapper<UnitCategoryDto, UnitCategoryEntity> {
 
-    @Override
-    @InheritInverseConfiguration
-    UnitCategoryEntity toEntity(UnitCategoryDto dto);
+  @Override
+  @InheritInverseConfiguration
+  UnitCategoryEntity toEntity(UnitCategoryDto dto);
 
-    @Override
-    @Mapping(target = "id", source = "id")
-    @Mapping(target = "name", source = "name")
-    @Mapping(target = "description", source = "description")
-    @Mapping(target = "defaultUnit", source = "defaultUnit")
-    @Mapping(target = "subcategoryDtoList", source = "subcategoryEntityList")
-    UnitCategoryDto toDto(UnitCategoryEntity unitCategoryEntity);
-
+  @Override
+  @Mapping(target = "id", source = "id")
+  @Mapping(target = "name", source = "name")
+  @Mapping(target = "description", source = "description")
+  @Mapping(target = "defaultUnit", source = "defaultUnit")
+  @Mapping(target = "subcategoryDtoList", source = "subcategoryEntityList")
+  UnitCategoryDto toDto(UnitCategoryEntity unitCategoryEntity);
 }

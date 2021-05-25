@@ -12,7 +12,6 @@ import javax.persistence.*;
 @Getter
 @Setter
 public class BodyMeasurementCategoryEntity extends BaseEntity {
-
     @Column(name = "name")
     private String name;
 
@@ -23,6 +22,4 @@ public class BodyMeasurementCategoryEntity extends BaseEntity {
     @JoinColumn(name = "unit_categories_id", referencedColumnName = "id", nullable = false)
     @NotNull
     private UnitCategoryEntity unitCategoryEntity;
-
-
 }

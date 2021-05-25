@@ -1,6 +1,5 @@
 package al.ikubinfo.healthometer.activity.entity;
 
-
 import al.ikubinfo.commons.entity.BaseEntity;
 import al.ikubinfo.healthometer.users.entity.UserEntity;
 import com.sun.istack.NotNull;

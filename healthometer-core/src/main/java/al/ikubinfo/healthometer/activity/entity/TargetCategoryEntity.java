@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 
 @Entity
 @Table(schema = "healthometer", name = "target_category")
@@ -23,5 +22,4 @@ public class TargetCategoryEntity extends BaseEntity {
     @JoinColumn(name = "unit_categories_id", referencedColumnName = "id", nullable = false)
     @NotNull
     private UnitCategoryEntity unitCategoryEntity;
-
 }
