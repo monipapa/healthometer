@@ -1,6 +1,7 @@
 package al.ikubinfo.healthometer.activity.service;
 
 import al.ikubinfo.commons.service.AbstractService;
+import al.ikubinfo.healthometer.activity.dto.BmiDto;
 import al.ikubinfo.healthometer.activity.dto.UserBodyMeasurementDto;
 import al.ikubinfo.healthometer.activity.entity.UserBodyMeasurementEntity;
 import al.ikubinfo.healthometer.activity.mappers.UserBodyMeasurementMapper;
@@ -16,4 +17,13 @@ public class UserBodyMeasurementService extends AbstractService<
     public UserBodyMeasurementService(UserBodyMeasurementRepository repository, UserBodyMeasurementMapper mapper) {
         super(repository, mapper);
     }
+
+    public BmiDto calculateBmi() {
+        BmiDto bmi = new BmiDto();
+        //TODO Query get last height measurement
+        //Query get last weight measurement
+        //BMI = kg/m2
+        return bmi;
+    }
+
 }

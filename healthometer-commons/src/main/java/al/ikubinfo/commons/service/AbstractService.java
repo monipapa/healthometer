@@ -30,7 +30,7 @@ public abstract class AbstractService<
 
     public DTO getSingle(Long id) {
         ENTITY entity = getEntity(id);
-        doGetSingle(entity);
+        //doGetSingle(entity);
         return mapper.toDto(entity);
     }
 
@@ -47,8 +47,8 @@ public abstract class AbstractService<
     }
 
     @Transactional
-    protected ENTITY save(DTO unitCategoryDto) {
-        ENTITY entity = mapper.toEntity(unitCategoryDto);
+    public DTO save(DTO dto) {
+        ENTITY entity = mapper.toEntity(dto);
         entity.setDateCreated(LocalDateTime.now());
         entity.setUserCreated(
                 SecurityUtils.getCurrentUsername()
@@ -57,12 +57,13 @@ public abstract class AbstractService<
                                     throw new SecurityException(" You are not allowed to add this element!");
                                 }));
         doSave(entity);
-        return repository.save(entity);
+        entity=repository.save(entity);
+        return mapper.toDto(entity);
     }
 
     @Transactional
-    public ENTITY update(Long id, DTO unitCategoryDto) {
-        ENTITY entity = mapper.toEntity(unitCategoryDto);
+    public DTO update(Long id, DTO dto) {
+        ENTITY entity = mapper.toEntity(dto);
         doUpdate(entity);
         entity.setUserUpdated(
                 SecurityUtils.getCurrentUsername()
@@ -72,8 +73,8 @@ public abstract class AbstractService<
                                 }));
         entity.setDateUpdated(LocalDateTime.now());
         entity.setId(id);
-        repository.save(entity);
-        return entity;
+        entity=repository.save(entity);
+        return mapper.toDto(entity);
     }
 
     @Transactional

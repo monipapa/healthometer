@@ -36,7 +36,7 @@ public class UnitSubcategoryController {
   @PreAuthorize("hasAnyAuthority('admin')")
   @ApiOperation(value = "Add a new Unit Subcategory")
   @PostMapping
-  public ResponseEntity<UnitSubcategoryEntity> save(
+  public ResponseEntity<UnitSubcategoryDto> save(
       @RequestBody @NotNull UnitSubcategoryDto unitSubcategoryDto) {
     return new ResponseEntity<>(
         unitSubcategoryService.save(unitSubcategoryDto), HttpStatus.CREATED);
@@ -45,7 +45,7 @@ public class UnitSubcategoryController {
   @PreAuthorize("hasAnyAuthority('admin')")
   @ApiOperation(value = "Update an existing Unit Subcategory")
   @PutMapping("/{id}")
-  public ResponseEntity<UnitSubcategoryEntity> update(
+  public ResponseEntity<UnitSubcategoryDto> update(
       @RequestBody @NotNull UnitSubcategoryDto unitSubcategoryDto, @PathVariable @NonNull Long id) {
     return new ResponseEntity<>(
         unitSubcategoryService.update(id, unitSubcategoryDto), HttpStatus.CREATED);
