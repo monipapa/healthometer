@@ -11,7 +11,7 @@ public class UserDto extends BaseDto {
   private String firstname;
   private String lastname;
   private String email;
-  private String password;
+  //private String password;
   private RoleDto roleDto = new RoleDto();
   private StatusDto statusDto = new StatusDto();
 }
