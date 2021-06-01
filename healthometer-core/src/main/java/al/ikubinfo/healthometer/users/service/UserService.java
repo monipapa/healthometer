@@ -1,6 +1,10 @@
 package al.ikubinfo.healthometer.users.service;
 
 import al.ikubinfo.commons.security.SecurityUtils;
+import al.ikubinfo.healthometer.activity.dto.MeasurementDto;
+import al.ikubinfo.healthometer.activity.entity.MeasurementEntity;
+import al.ikubinfo.healthometer.activity.service.MeasurementService;
+import al.ikubinfo.healthometer.measurement.service.MeasurementCategoryService;
 import al.ikubinfo.healthometer.users.dto.PasswordDto;
 import al.ikubinfo.healthometer.users.dto.UserDto;
 import al.ikubinfo.healthometer.users.entity.UserEntity;
@@ -10,10 +14,15 @@ import al.ikubinfo.healthometer.users.mappers.UserBidirectionalMapper;
 import al.ikubinfo.healthometer.users.repository.RoleRepository;
 import al.ikubinfo.healthometer.users.repository.StatusRepository;
 import al.ikubinfo.healthometer.users.repository.UserRepository;
-import java.util.Arrays;
-import java.util.List;
+import al.ikubinfo.healthometer.users.repository.criteria.UserCriteria;
+import al.ikubinfo.healthometer.users.repository.specification.UserSpecificationBuilder;
 import lombok.AllArgsConstructor;
 import lombok.val;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.lang.Nullable;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,6 +31,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.math.RoundingMode;
+import java.util.Arrays;
+import java.util.List;
 
 @Service
 @Transactional
@@ -35,6 +48,11 @@ public class UserService implements UserDetailsService {
 
   private UserBidirectionalMapper userBidirectionalMapper;
   private StatusBidirectionalMapper statusBidirectionalMapper;
+
+  private MeasurementService measurementService;
+  private MeasurementCategoryService measurementCategoryService;
+
+  protected final UserSpecificationBuilder userSpecificationBuilder;
 
   @Transactional(readOnly = true)
   public UserDto getUserById(Long id) {
@@ -98,14 +116,43 @@ public class UserService implements UserDetailsService {
   public UserDetails loadUserByUsername(String username) {
     val user = userRepository.findByUsername(username);
     List<GrantedAuthority> role =
-        Arrays.asList(new SimpleGrantedAuthority(user.getRole().getName()));
+            Arrays.asList(new SimpleGrantedAuthority(user.getRole().getName()));
     return new org.springframework.security.core.userdetails.User(
-        user.getUsername(), user.getPassword(), role);
+            user.getUsername(), user.getPassword(), role);
   }
 
   private UserEntity getUser(Long id) {
     return userRepository
-        .findById(id)
-        .orElseThrow(() -> new RuntimeException("Invalid user with id: " + id));
+            .findById(id)
+            .orElseThrow(() -> new RuntimeException("Invalid user with id: " + id));
+  }
+
+  public Page<?> filter(@Nullable UserCriteria criteria) {
+    return getEntities(criteria).map(userBidirectionalMapper::toDto);
+  }
+
+  protected Page<UserEntity> getEntities(@Nullable UserCriteria criteria) {
+    Pageable pageable = PageRequest.of(criteria.getPageNumber(), criteria.getPageSize(),
+            Sort.Direction.valueOf(criteria.getSortDirection()), criteria.getOrderBy());
+
+    return (criteria != null)
+            ? userRepository.findAll(userSpecificationBuilder.filter(criteria), pageable)
+            : userRepository.findAll(pageable);
+
+  }
+
+  //TODO Query get last measurements
+  //BMI = kg/m2
+  @Transactional
+  public MeasurementDto calculateBmi(Long userId) {
+    //TODO static final fields
+    MeasurementEntity height = measurementService.getLastMeasurementPerUserPerCategory(userId, 3l);
+    MeasurementEntity weight = measurementService.getLastMeasurementPerUserPerCategory(userId, 1l);
+    MeasurementDto dto = new MeasurementDto();
+    dto.setUserDto(userBidirectionalMapper.toDto(userRepository.getOne(userId)));
+    dto.setBodyMeasurementCategoryDto(measurementCategoryService.getSingle(3l));
+    dto.setValue(height.getValue().divide((weight.getValue().multiply(weight.getValue())), 2, RoundingMode.UP));
+    measurementService.save(dto);
+    return dto;
   }
 }

@@ -14,13 +14,15 @@ public interface UserBidirectionalMapper
 
   @Override
   @Mappings({
-    @Mapping(source = "id", target = "id"),
-    @Mapping(source = "username", target = "username"),
-    @Mapping(source = "firstname", target = "firstname"),
-    @Mapping(source = "lastname", target = "lastname"),
-    @Mapping(source = "email", target = "email"),
-    @Mapping(source = "role", target = "roleDto"),
-    @Mapping(source = "status", target = "statusDto") /*,
+          @Mapping(source = "id", target = "id"),
+          @Mapping(source = "username", target = "username"),
+          @Mapping(source = "firstname", target = "firstname"),
+          @Mapping(source = "lastname", target = "lastname"),
+          @Mapping(source = "email", target = "email"),
+          @Mapping(source = "role", target = "roleDto"),
+          @Mapping(source = "status", target = "statusDto"),
+          @Mapping(source = "bmiMeasurements", target = "bmiMeasurements")
+          /*,
     @Mapping(source = "dateCreated", target = "dateCreated"),
     @Mapping(source = "dateUpdated", target = "dateUpdated"),
     @Mapping(source = "userCreated", target = "userCreated"),

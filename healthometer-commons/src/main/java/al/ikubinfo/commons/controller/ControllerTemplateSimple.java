@@ -1,6 +1,5 @@
 package al.ikubinfo.commons.controller;
 
-import al.ikubinfo.commons.dto.BaseCriteria;
 import al.ikubinfo.commons.dto.BaseDto;
 import al.ikubinfo.commons.service.ServiceTemplate;
 import com.sun.istack.NotNull;
@@ -13,9 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @AllArgsConstructor
-public abstract class ControllerTemplate<
+public abstract class ControllerTemplateSimple<
         DTO extends BaseDto,
-        C extends BaseCriteria,
         SERVICE extends ServiceTemplate> {
 
     protected final SERVICE service;

@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
+
 public abstract class ServiceTemplate<
         ENTITY extends BaseEntity,
         DTO extends BaseDto,

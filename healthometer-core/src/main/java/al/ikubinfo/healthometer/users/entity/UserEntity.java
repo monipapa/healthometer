@@ -2,9 +2,14 @@ package al.ikubinfo.healthometer.users.entity;
 
 import al.ikubinfo.commons.entity.BaseEntity;
 import javax.persistence.*;
+
+import al.ikubinfo.healthometer.activity.entity.MeasurementEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Where;
+
+import java.util.List;
 
 @Entity
 @Table(schema = "healthometer", name = "users")
@@ -35,4 +40,8 @@ public class UserEntity extends BaseEntity {
   @ManyToOne
   @JoinColumn(name = "user_status_id")
   private StatusEntity status;
+
+  @OneToMany(mappedBy = "userEntity")
+  @Where(clause = "body_measurement_category_id=3")
+  private List<MeasurementEntity> bmiMeasurements;
 }
