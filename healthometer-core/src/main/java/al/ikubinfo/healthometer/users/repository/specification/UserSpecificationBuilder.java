@@ -23,12 +23,12 @@ public class UserSpecificationBuilder extends SpecificationBuilder<UserEntity, U
 
         if (criteria.getFirstName() != null) {
             specification = Objects.requireNonNull(specification).and(
-                    likeLowerSpecification("firstName", criteria.getFirstName()));
+                    likeLowerCaseSpecification("firstName", criteria.getFirstName()));
         }
 
         if (criteria.getLastName() != null) {
             specification = Objects.requireNonNull(specification).and(
-                    likeLowerSpecification("lastName", criteria.getLastName()));
+                    likeLowerCaseSpecification("lastName", criteria.getLastName()));
         }
 
         if (criteria.getStatusId() != null) {
@@ -45,11 +45,11 @@ public class UserSpecificationBuilder extends SpecificationBuilder<UserEntity, U
 
         if (criteria.getEmail() != null) {
             specification = Objects.requireNonNull(specification).and(
-                    likeLowerSpecification("email", criteria.getEmail()));
+                    likeLowerCaseSpecification("email", criteria.getEmail()));
         }
         if (criteria.getUsername() != null) {
             specification = Objects.requireNonNull(specification).and(
-                    likeLowerSpecification("username", criteria.getUsername()));
+                    likeLowerCaseSpecification("username", criteria.getUsername()));
         }
 
         return specification;

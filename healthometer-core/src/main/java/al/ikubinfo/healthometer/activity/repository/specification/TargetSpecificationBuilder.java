@@ -4,9 +4,11 @@ import al.ikubinfo.commons.specification.SpecificationBuilder;
 import al.ikubinfo.healthometer.activity.entity.TargetEntity;
 import al.ikubinfo.healthometer.activity.repository.criteria.TargetCriteria;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
+@Component
 public class TargetSpecificationBuilder extends SpecificationBuilder<TargetEntity, TargetCriteria> {
     @Override
     public Specification<TargetEntity> filter(TargetCriteria criteria) {
@@ -28,10 +30,6 @@ public class TargetSpecificationBuilder extends SpecificationBuilder<TargetEntit
         if (criteria.getUnitSubcategoryId() != null) {
             specification = Objects.requireNonNull(specification).and(
                     equalsSpecification("unitSubcategoryId", criteria.getUnitSubcategoryId()));
-        }
-        if (criteria.getTargetValue() != null) {
-            specification = Objects.requireNonNull(specification).and(
-                    equalsSpecification("targetValue", criteria.getTargetValue()));
         }
 
         return specification;

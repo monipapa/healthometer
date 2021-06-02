@@ -7,10 +7,12 @@ import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.springframework.stereotype.Component;
 
 @Mapper(
         componentModel = "spring",
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+//TODO @Component
 public interface MeasurementMapper
         extends DtoToEntityBidirectionalMapper<MeasurementDto, MeasurementEntity> {
 

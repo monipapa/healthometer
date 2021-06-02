@@ -4,6 +4,10 @@ import al.ikubinfo.commons.dto.BaseCriteria;
 import al.ikubinfo.commons.entity.BaseEntity;
 import org.springframework.data.jpa.domain.Specification;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
 
 public abstract class SpecificationBuilder<E extends BaseEntity, C extends BaseCriteria> {
 
@@ -13,12 +17,8 @@ public abstract class SpecificationBuilder<E extends BaseEntity, C extends BaseC
         return (root, query, builder) -> builder.equal(root.get(fieldName), value);
     }
 
-    protected <T> Specification<E> equalsSpecification(Long fieldName, T value) {
-        return (root, query, builder) -> builder.equal(root.get(String.valueOf(fieldName)), value);
-    }
-
-    protected Specification<E> likeLowerSpecification(String fieldName, String value) {
-        return (root, query, builder) ->
+    protected Specification<E> likeLowerCaseSpecification(String fieldName, String value) {
+        return (Root<E> root, CriteriaQuery<?> query, CriteriaBuilder builder) ->
                 builder.like(builder.lower(root.get(fieldName)), wrapLikeQuery(value));
     }
     protected static String wrapLikeQuery(String txt) {

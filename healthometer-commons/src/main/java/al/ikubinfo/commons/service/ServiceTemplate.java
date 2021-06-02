@@ -1,11 +1,18 @@
 package al.ikubinfo.commons.service;
 
+import al.ikubinfo.commons.dto.BaseCriteria;
 import al.ikubinfo.commons.dto.BaseDto;
 import al.ikubinfo.commons.entity.BaseEntity;
 import al.ikubinfo.commons.mapper.DtoToEntityBidirectionalMapper;
+import al.ikubinfo.commons.repository.BaseRepository;
 import al.ikubinfo.commons.security.SecurityUtils;
+import al.ikubinfo.commons.specification.SpecificationBuilder;
 import lombok.AllArgsConstructor;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.lang.Nullable;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
@@ -18,9 +25,12 @@ public abstract class ServiceTemplate<
         ENTITY extends BaseEntity,
         DTO extends BaseDto,
         MAPPER extends DtoToEntityBidirectionalMapper<DTO, ENTITY>,
-        REPOSITORY extends JpaRepository<ENTITY, Long>> {
+        REPOSITORY extends BaseRepository<ENTITY>,
+        CRITERIA extends BaseCriteria,
+        SPECIFICATION extends SpecificationBuilder<ENTITY, CRITERIA>> {
     protected final REPOSITORY repository;
     protected final MAPPER mapper;
+    protected final SPECIFICATION specificationBuilder;
 
     //TODO protected
     @Transactional(readOnly = true)
@@ -80,7 +90,7 @@ public abstract class ServiceTemplate<
                                 }));
         entity.setDateUpdated(LocalDateTime.now());
         entity.setId(id);
-        entity=repository.save(entity);
+        entity = repository.save(entity);
         return mapper.toDto(entity);
     }
 
@@ -89,6 +99,19 @@ public abstract class ServiceTemplate<
         ENTITY entity = getEntity(id);
         doDelete(entity);
         repository.delete(entity);
+    }
+
+    public Page<?> filter(@Nullable CRITERIA criteria) {
+        return getEntities(criteria).map(mapper::toDto);
+    }
+
+    protected Page<ENTITY> getEntities(@Nullable CRITERIA criteria) {
+        Pageable pageable = PageRequest.of(criteria.getPageNumber(), criteria.getPageSize(),
+                Sort.Direction.valueOf(criteria.getSortDirection()), criteria.getOrderBy());
+
+        return (criteria != null)
+                ? repository.findAll(specificationBuilder.filter(criteria), pageable)
+                : repository.findAll(pageable);
     }
 
     //public abstract Boolean isValid();

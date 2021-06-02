@@ -2,7 +2,6 @@ package al.ikubinfo.healthometer.activity.service;
 
 import al.ikubinfo.commons.exception.WarningEx;
 import al.ikubinfo.commons.service.ServiceTemplate;
-import al.ikubinfo.healthometer.activity.dto.BmiDto;
 import al.ikubinfo.healthometer.activity.dto.MeasurementDto;
 import al.ikubinfo.healthometer.activity.entity.MeasurementEntity;
 import al.ikubinfo.healthometer.activity.mappers.MeasurementMapper;
@@ -15,18 +14,20 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-
 public class MeasurementService extends ServiceTemplate<
         MeasurementEntity,
         MeasurementDto,
         MeasurementMapper,
-        MeasurementRepository> {
-    public MeasurementService(MeasurementRepository repository, MeasurementMapper mapper, MeasurementSpecificationBuilder specificationBuilder, MeasurementSpecificationBuilder specificationBuilder1) {
-        super(repository, mapper);
-        this.specificationBuilder = specificationBuilder1;
-    }
+        MeasurementRepository,
+        MeasurementCriteria,
+        MeasurementSpecificationBuilder> {
 
     protected final MeasurementSpecificationBuilder specificationBuilder;
+
+    public MeasurementService(MeasurementRepository repository, MeasurementMapper mapper, MeasurementSpecificationBuilder specificationBuilder, MeasurementSpecificationBuilder specificationBuilder1) {
+        super(repository, mapper, specificationBuilder);
+        this.specificationBuilder = specificationBuilder1;
+    }
 
     public MeasurementEntity getLastMeasurementPerUserPerCategory(Long userId, Long measurementCategoryId) {
         MeasurementCriteria criteria = new MeasurementCriteria();

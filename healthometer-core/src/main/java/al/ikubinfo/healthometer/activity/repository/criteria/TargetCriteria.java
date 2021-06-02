@@ -10,5 +10,4 @@ public class TargetCriteria extends BaseCriteria {
     private Long userId;
     private Long targetCategoryId;
     private Long unitSubcategoryId;
-    private BigDecimal targetValue;
 }

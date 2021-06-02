@@ -5,15 +5,19 @@ import al.ikubinfo.healthometer.target.dto.TargetCategoryDto;
 import al.ikubinfo.healthometer.target.entity.TargetCategoryEntity;
 import al.ikubinfo.healthometer.target.mappers.TargetCategoryMapper;
 import al.ikubinfo.healthometer.target.repository.TargetCategoryRepository;
+import al.ikubinfo.healthometer.target.repository.criteria.TargetCategoryCriteria;
+import al.ikubinfo.healthometer.target.repository.specification.TargetCategorySpecificationBuilder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TargetCategoryService extends ServiceTemplate<
-        TargetCategoryEntity,
+public class TargetCategoryService extends ServiceTemplate<TargetCategoryEntity,
         TargetCategoryDto,
         TargetCategoryMapper,
-        TargetCategoryRepository> {
-    public TargetCategoryService(TargetCategoryRepository repository, TargetCategoryMapper mapper) {
-        super(repository, mapper);
+        TargetCategoryRepository,
+        TargetCategoryCriteria,
+        TargetCategorySpecificationBuilder> {
+
+    public TargetCategoryService(TargetCategoryRepository repository, TargetCategoryMapper mapper, TargetCategorySpecificationBuilder specificationBuilder) {
+        super(repository, mapper, specificationBuilder);
     }
 }

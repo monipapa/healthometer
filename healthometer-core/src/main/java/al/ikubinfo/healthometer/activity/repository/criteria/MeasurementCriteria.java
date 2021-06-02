@@ -18,6 +18,4 @@ public class MeasurementCriteria extends BaseCriteria {
     private Long userId;
     private Long bodyMeasurementCategoryId;
     private Long unitSubcategoryId;
-    private BigDecimal value;
-    private Long maxId;
 }

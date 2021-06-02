@@ -10,6 +10,4 @@ public class TargetTrackerCriteria extends BaseCriteria {
     private Long userTargetCategoryId;
     private Long productId;
     private Long unitSubcategoryId;
-    private BigDecimal unit;
-    private BigDecimal unitValue;
 }

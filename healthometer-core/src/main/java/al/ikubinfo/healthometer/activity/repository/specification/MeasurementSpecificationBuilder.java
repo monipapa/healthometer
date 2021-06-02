@@ -37,11 +37,6 @@ public class MeasurementSpecificationBuilder extends SpecificationBuilder<Measur
                             -> criteriaBuilder.equal(root.get("unitSubcategoryEntity").get("id"), criteria.getUnitSubcategoryId())));
         }
 
-        if (criteria.getValue() != null) {
-            specification = Objects.requireNonNull(specification).and(
-                    equalsSpecification("value", criteria.getValue()));
-        }
-
         return specification;
     }
 
