@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Mapper(
         componentModel = "spring",
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-//TODO @Component
+@Component
 public interface MeasurementMapper
         extends DtoToEntityBidirectionalMapper<MeasurementDto, MeasurementEntity> {
 
@@ -22,7 +22,7 @@ public interface MeasurementMapper
 
     @Override
     @Mapping(target = "id", source = "id")
-    @Mapping(target = "userDto", source = "userEntity")
+    //@Mapping(target = "userDto", source = "userEntity")
     @Mapping(target = "bodyMeasurementCategoryDto", source = "bodyMeasurementCategoryEntity")
     @Mapping(target = "unitSubcategoryDto", source = "unitSubcategoryEntity")
     @Mapping(target = "value", source = "value")

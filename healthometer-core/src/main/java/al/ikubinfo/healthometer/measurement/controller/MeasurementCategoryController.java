@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("measurementCategory")
+@RequestMapping("measurementCategories")
 public class MeasurementCategoryController extends ControllerTemplate<MeasurementCategoryDto, MeasurementCategoryCriteria,
         MeasurementCategoryService> {
     public MeasurementCategoryController(MeasurementCategoryService measurementCategoryService) {

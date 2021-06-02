@@ -1,4 +1,4 @@
-package al.ikubinfo.commons.exception;
+package al.ikubinfo.healthometer.exception;
 
 import al.ikubinfo.commons.entity.ErrorFormat;
 import java.util.HashMap;

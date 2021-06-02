@@ -4,6 +4,7 @@ import al.ikubinfo.commons.entity.BaseEntity;
 import javax.persistence.*;
 
 import al.ikubinfo.healthometer.activity.entity.MeasurementEntity;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -43,5 +44,6 @@ public class UserEntity extends BaseEntity {
 
   @OneToMany(mappedBy = "userEntity")
   @Where(clause = "body_measurement_category_id=3")
+  @JsonManagedReference
   private List<MeasurementEntity> bmiMeasurements;
 }

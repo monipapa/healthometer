@@ -1,6 +1,6 @@
 package al.ikubinfo.healthometer.activity.service;
 
-import al.ikubinfo.commons.exception.WarningEx;
+import al.ikubinfo.healthometer.exception.WarningEx;
 import al.ikubinfo.commons.service.ServiceTemplate;
 import al.ikubinfo.healthometer.activity.dto.MeasurementDto;
 import al.ikubinfo.healthometer.activity.entity.MeasurementEntity;

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("targetTracker")
+@RequestMapping("targetTrackers")
 public class TargetTrackerController extends ControllerTemplate<TargetTrackerDto, TargetTrackerCriteria, TargetTrackerService> {
     public TargetTrackerController(TargetTrackerService service) {
         super(service);

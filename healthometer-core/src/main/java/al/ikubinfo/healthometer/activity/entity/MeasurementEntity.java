@@ -4,6 +4,7 @@ import al.ikubinfo.commons.entity.BaseEntity;
 import al.ikubinfo.healthometer.measurement.entity.MeasurementCategoryEntity;
 import al.ikubinfo.healthometer.unit.entity.UnitSubcategoryEntity;
 import al.ikubinfo.healthometer.users.entity.UserEntity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,9 +17,10 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 public class MeasurementEntity extends BaseEntity {
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     @NotNull
+    @JsonBackReference
     private UserEntity userEntity;
 
     @ManyToOne

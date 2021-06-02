@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("bodyMeasurement")
+@RequestMapping("bodyMeasurements")
 public class MeasurementController extends ControllerTemplate<MeasurementDto, MeasurementCriteria, MeasurementService> {
     public MeasurementController(MeasurementService service) {
         super(service);

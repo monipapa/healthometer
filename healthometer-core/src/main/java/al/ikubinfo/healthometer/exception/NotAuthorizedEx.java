@@ -1,4 +1,4 @@
-package al.ikubinfo.commons.exception;
+package al.ikubinfo.healthometer.exception;
 
 public class NotAuthorizedEx extends RuntimeException {
   public NotAuthorizedEx(String message) {
