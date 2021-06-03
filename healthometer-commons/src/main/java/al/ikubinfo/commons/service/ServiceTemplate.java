@@ -114,6 +114,7 @@ public abstract class ServiceTemplate<
                 : repository.findAll(pageable);
     }
 
+    public final UserEntity
     //public abstract Boolean isValid();
 
     public void doGetList() {

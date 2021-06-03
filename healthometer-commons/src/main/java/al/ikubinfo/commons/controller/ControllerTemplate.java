@@ -17,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 public abstract class ControllerTemplate<
         DTO extends BaseDto,
-        C extends BaseCriteria,
+        CRITERIA extends BaseCriteria,
         SERVICE extends ServiceTemplate> {
 
     protected final SERVICE service;
@@ -52,7 +52,7 @@ public abstract class ControllerTemplate<
     }
 
     @PostMapping(value = "/filter")
-    public ResponseEntity<Page<?>> filter(@Nullable @RequestBody C criteria) {
+    public ResponseEntity<Page<?>> filter(@Nullable @RequestBody CRITERIA criteria) {
         return new ResponseEntity<>(service.filter(criteria), HttpStatus.OK);
     }
 }
