@@ -113,8 +113,6 @@ public abstract class ServiceTemplate<
                 ? repository.findAll(specificationBuilder.filter(criteria), pageable)
                 : repository.findAll(pageable);
     }
-
-    public final UserEntity
     //public abstract Boolean isValid();
 
     public void doGetList() {
