@@ -7,6 +7,7 @@ import al.ikubinfo.healthometer.activity.entity.TargetEntity;
 import al.ikubinfo.healthometer.activity.entity.TargetTrackerEntity;
 import al.ikubinfo.healthometer.activity.mappers.TargetTrackerMapper;
 import al.ikubinfo.healthometer.activity.repository.TargetTrackerRepository;
+import al.ikubinfo.healthometer.activity.repository.criteria.TargetCriteria;
 import al.ikubinfo.healthometer.activity.repository.criteria.TargetTrackerCriteria;
 import al.ikubinfo.healthometer.activity.repository.specification.TargetTrackerSpecificationBuilder;
 import al.ikubinfo.healthometer.exception.NotAuthorizedEx;
@@ -36,17 +37,45 @@ public class TargetTrackerService extends ServiceTemplate<
     }
 
     @Override
+    public void doGetSingle(TargetTrackerEntity entity) {
+        checkIfLoggedUserIsAuthorized(entity.getUserTargetCategoryEntity().getId());
+        super.doGetSingle(entity);
+    }
+
+    @Override
+    public void doSave(TargetTrackerEntity entity) {
+        checkIfLoggedUserIsAuthorized(entity.getUserTargetCategoryEntity().getId());
+        super.doSave(entity);
+    }
+
+    @Override
+    public void doUpdate(TargetTrackerEntity entity) {
+        checkIfLoggedUserIsAuthorized(entity.getUserTargetCategoryEntity().getId());
+        super.doUpdate(entity);
+    }
+
+    @Override
+    public void doDelete(TargetTrackerEntity entity) {
+        checkIfLoggedUserIsAuthorized(entity.getUserTargetCategoryEntity().getId());
+        super.doDelete(entity);
+    }
+
+    @Override
     public Page<?> filter(TargetTrackerCriteria criteria) {
+        checkIfLoggedUserIsAuthorized(criteria.getUserTargetCategoryId());
+        return super.filter(criteria);
+    }
+
+    public void checkIfLoggedUserIsAuthorized(Long userTargetId) {
         UserEntity loggedUser = userRepository.findByUsername(SecurityUtils.getCurrentUsername().get());
         if (!loggedUser.getRole().getName().equals(Role.ADMIN)) {
-            if (criteria.getUserTargetCategoryId() == null) {
+            if (userTargetId== null) {
                 throw new NotAuthorizedEx("Please contact the administrator!");
             }
-            TargetEntity targetEntity = targetService.getEntity(criteria.getUserTargetCategoryId());
-            if (targetEntity == null || loggedUser.getId().equals(targetEntity.getUserEntity().getId())) {
+            TargetEntity targetEntity = targetService.getEntity(userTargetId);
+            if (targetEntity == null || !loggedUser.getId().equals(targetEntity.getUserEntity().getId())) {
                 throw new NotAuthorizedEx("You are not authorized for this action! ");
             }
         }
-        return super.filter(criteria);
     }
 }

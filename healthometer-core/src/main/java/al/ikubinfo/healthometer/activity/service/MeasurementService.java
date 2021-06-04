@@ -4,9 +4,11 @@ import al.ikubinfo.commons.security.SecurityUtils;
 import al.ikubinfo.commons.service.ServiceTemplate;
 import al.ikubinfo.healthometer.activity.dto.MeasurementDto;
 import al.ikubinfo.healthometer.activity.entity.MeasurementEntity;
+import al.ikubinfo.healthometer.activity.entity.TargetEntity;
 import al.ikubinfo.healthometer.activity.mappers.MeasurementMapper;
 import al.ikubinfo.healthometer.activity.repository.MeasurementRepository;
 import al.ikubinfo.healthometer.activity.repository.criteria.MeasurementCriteria;
+import al.ikubinfo.healthometer.activity.repository.criteria.TargetCriteria;
 import al.ikubinfo.healthometer.activity.repository.specification.MeasurementSpecificationBuilder;
 import al.ikubinfo.healthometer.exception.NotAuthorizedEx;
 import al.ikubinfo.healthometer.exception.WarningEx;
@@ -45,6 +47,10 @@ public class MeasurementService extends ServiceTemplate<
         criteria.setBodyMeasurementCategoryId(measurementCategoryId);
         criteria.setSortDirection(Sort.Direction.DESC.name());
         List<MeasurementEntity> measurementEntities = repository.findAll(specificationBuilder.filter(criteria));
+/*
+        List<MeasurementEntity> measurementEntities = repository.findAll(super.specificationBuilder.filter(criteria));
+*/
+
         if (measurementEntities.size() == 0) {
             throw new WarningEx("There is no such category measured from this user!");
         } else {
@@ -53,13 +59,42 @@ public class MeasurementService extends ServiceTemplate<
     }
 
     @Override
+    public void doGetSingle(MeasurementEntity entity) {
+        checkIfLoggedUserIsAuthorized(entity.getUserEntity().getId());
+        super.doGetSingle(entity);
+    }
+
+    @Override
+    public void doSave(MeasurementEntity entity) {
+        checkIfLoggedUserIsAuthorized(entity.getUserEntity().getId());
+        super.doSave(entity);
+    }
+
+    @Override
+    public void doUpdate(MeasurementEntity entity) {
+        checkIfLoggedUserIsAuthorized(entity.getUserEntity().getId());
+        super.doUpdate(entity);
+    }
+
+    @Override
+    public void doDelete(MeasurementEntity entity) {
+        checkIfLoggedUserIsAuthorized(entity.getUserEntity().getId());
+        super.doDelete(entity);
+    }
+
+    @Override
     public Page<?> filter(MeasurementCriteria criteria) {
+        checkIfLoggedUserIsAuthorized(criteria.getUserId());
+        return super.filter(criteria);
+    }
+
+    public void checkIfLoggedUserIsAuthorized(Long userId) {
         UserEntity loggedUser = userRepository.findByUsername(SecurityUtils.getCurrentUsername().get());
+
         if (!loggedUser.getRole().getName().equals(Role.ADMIN)) {
-            if (loggedUser == null || loggedUser.getId().equals(criteria.getUserId())) {
+            if (loggedUser == null || !loggedUser.getId().equals(userId)) {
                 throw new NotAuthorizedEx("You are not authorized for this action! ");
             }
         }
-        return super.filter(criteria);
     }
 }
