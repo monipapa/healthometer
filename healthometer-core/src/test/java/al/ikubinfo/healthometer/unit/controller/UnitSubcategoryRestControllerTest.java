@@ -79,9 +79,8 @@ public class UnitSubcategoryRestControllerTest extends HealthometerTestSupport {
   }
 
   @Test
-  //TODO Check
   void deleteValidUnitSubcategory() {
-    assertAll(() -> createDelete(URL + "/1", TOKEN));
+    assertThrows(Exception.class, () -> createDelete(URL + "/100", TOKEN));
   }
 
     private UnitCategoryDto getUnitCategory(){
