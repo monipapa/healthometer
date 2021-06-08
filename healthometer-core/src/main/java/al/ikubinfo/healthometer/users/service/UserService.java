@@ -152,13 +152,6 @@ public class UserService implements UserDetailsService {
     dto.setUserDto(userBidirectionalMapper.toDto(userRepository.getOne(userId)));
     dto.setBodyMeasurementCategoryDto(measurementCategoryService.getSingle(3l));
     dto.setValue(height.getValue().divide((weight.getValue().multiply(weight.getValue())), 2, RoundingMode.UP));
-if(measurementService!=null){
-  System.out.println("-------MEasurementSservice is NOT null------");
-  measurementService.save(dto);
-}else {
-  System.out.println("-------Measurement Service is NULL------");
-
-}
     return dto;
   }
 }

@@ -1,4 +1,4 @@
-package al.ikubinfo.healthometer.exception;
+package al.ikubinfo.commons.exception;
 
 public class BadRequestEx extends RuntimeException {
   public BadRequestEx(String message) {

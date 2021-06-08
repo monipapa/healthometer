@@ -1,8 +1,10 @@
-package al.ikubinfo.healthometer.exception;
+package al.ikubinfo.healthometer;
 
 import al.ikubinfo.commons.entity.ErrorFormat;
 import java.util.HashMap;
 import java.util.Map;
+
+import al.ikubinfo.commons.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;

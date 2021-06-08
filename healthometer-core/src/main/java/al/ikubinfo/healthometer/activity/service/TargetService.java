@@ -8,7 +8,7 @@ import al.ikubinfo.healthometer.activity.mappers.TargetMapper;
 import al.ikubinfo.healthometer.activity.repository.TargetRepository;
 import al.ikubinfo.healthometer.activity.repository.criteria.TargetCriteria;
 import al.ikubinfo.healthometer.activity.repository.specification.TargetSpecificationBuilder;
-import al.ikubinfo.healthometer.exception.NotAuthorizedEx;
+import al.ikubinfo.commons.exception.NotAuthorizedEx;
 import al.ikubinfo.healthometer.users.entity.UserEntity;
 import al.ikubinfo.healthometer.users.enums.Role;
 import al.ikubinfo.healthometer.users.repository.UserRepository;

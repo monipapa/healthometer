@@ -1,4 +1,4 @@
-package al.ikubinfo.healthometer.exception;
+package al.ikubinfo.commons.exception;
 
 public class NotFoundEx extends RuntimeException {
   public NotFoundEx(String message) {
