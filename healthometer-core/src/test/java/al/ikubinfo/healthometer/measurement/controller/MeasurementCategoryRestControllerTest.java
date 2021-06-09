@@ -1,9 +1,9 @@
-package al.ikubinfo.healthometer.target.controller;
+package al.ikubinfo.healthometer.measurement.controller;
 
 import al.ikubinfo.commons.utils.JsonUtils;
 import al.ikubinfo.healthometer.HealthometerApp;
 import al.ikubinfo.healthometer.HealthometerTestSupport;
-import al.ikubinfo.healthometer.target.dto.TargetCategoryDto;
+import al.ikubinfo.healthometer.measurement.dto.MeasurementCategoryDto;
 import al.ikubinfo.healthometer.unit.dto.UnitCategoryDto;
 import al.ikubinfo.healthometer.users.dto.AuthDto;
 import lombok.val;
@@ -22,14 +22,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest(classes = HealthometerApp.class)
 @Transactional
-public class TargetCategoryRestControllerTest extends HealthometerTestSupport {
+public class MeasurementCategoryRestControllerTest extends HealthometerTestSupport {
 
-    private String URL = "/targetCategories";
+    private String URL = "/measurementCategories";
     private static String TOKEN = "";
 
     @BeforeAll
     static void setup(@Autowired MockMvc mockMvc) {
-        val authDto = AuthDto.builder().username("user").password("password").valid(false).build();
+        val authDto = AuthDto.builder().username("admin").password("password").valid(false).build();
         try {
             TOKEN =
                     mockMvc
@@ -49,41 +49,41 @@ public class TargetCategoryRestControllerTest extends HealthometerTestSupport {
     }
 
     @Test
-    void getValidTargetCategory() {
-        assertEquals("Water", createGet(URL + "/1", TargetCategoryDto.class, TOKEN).getName());
+    void getValidMeasurementCategory() {
+        assertEquals("Weight", createGet(URL + "/1", MeasurementCategoryDto.class, TOKEN).getName());
     }
 
     @Test
-    void getInvalidTargetCategory() {
-        assertNotEquals("g", createGet(URL + "/1", TargetCategoryDto.class, TOKEN).getUnitCategoryDto().getDefaultUnit());
+    void getInvalidMeasurementCategory() {
+        assertThrows(Exception.class,() ->createGet(URL + "/100", MeasurementCategoryDto.class, TOKEN));
     }
 
     @Test
-        //TODO
-    void createInvalidTargetCategory() {
-//    assertThrows(Exception.class, () ->  createPost(URL, getTargetCategory(), TargetCategoryDto.class, TOKEN));
-
-    }
-
-
-    @Test
-    void editInvalidTargetCategory() {
-        assertThrows(AssertionError.class, () ->  createPut(URL + "/1", getTargetCategory(), TargetCategoryDto.class, TOKEN));
-
+    //TODO
+    void createValidMeasurementCategory() {
+    assertAll( () ->  createPost(URL, getMeasurementCategory(), MeasurementCategoryDto.class, TOKEN));
     }
 
     @Test
-    void deleteInvalidTargetCategory() {
-
-        //assertThrows(Exception.class, () ->  createDelete(URL + "/1", TOKEN));
-        //assertAll( () ->  createDelete(URL + "/1", TOKEN));
+    void editValidMeasurementCategory() {
+        assertAll(() ->  createPut(URL + "/1", getMeasurementCategory(), MeasurementCategoryDto.class, TOKEN));
     }
 
-    private TargetCategoryDto getTargetCategory(){
-        TargetCategoryDto targetCategoryDto=new TargetCategoryDto();
-        targetCategoryDto.setName("New target category");
-        targetCategoryDto.setDescription("New target category");
-        //targetCategoryDto.setUnitCategoryDto();
-        return targetCategoryDto;
+    @Test
+    void deleteValidMeasurementCategory() {
+        assertAll( () ->  createDelete(URL + "/1", TOKEN));
+    }
+    
+    private MeasurementCategoryDto getMeasurementCategory(){
+        MeasurementCategoryDto measurementCategoryDto=new MeasurementCategoryDto();
+        measurementCategoryDto.setName("New measurement category");
+        measurementCategoryDto.setDescription("New measurement category");
+        measurementCategoryDto.setUnitCategoryDto(getUnitCategory());
+        return measurementCategoryDto;
+    }
+    private UnitCategoryDto getUnitCategory(){
+        UnitCategoryDto unitCategoryDto=new UnitCategoryDto();
+        unitCategoryDto.setId(2l);
+        return unitCategoryDto;
     }
 }

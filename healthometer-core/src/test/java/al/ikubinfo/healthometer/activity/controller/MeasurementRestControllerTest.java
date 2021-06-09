@@ -1,10 +1,12 @@
-package al.ikubinfo.healthometer.target.controller;
+package al.ikubinfo.healthometer.activity.controller;
 
 import al.ikubinfo.commons.utils.JsonUtils;
 import al.ikubinfo.healthometer.HealthometerApp;
 import al.ikubinfo.healthometer.HealthometerTestSupport;
-import al.ikubinfo.healthometer.target.dto.TargetCategoryDto;
+import al.ikubinfo.healthometer.activity.dto.MeasurementDto;
+import al.ikubinfo.healthometer.measurement.dto.MeasurementCategoryDto;
 import al.ikubinfo.healthometer.unit.dto.UnitCategoryDto;
+import al.ikubinfo.healthometer.unit.dto.UnitSubcategoryDto;
 import al.ikubinfo.healthometer.users.dto.AuthDto;
 import lombok.val;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -22,14 +24,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest(classes = HealthometerApp.class)
 @Transactional
-public class TargetCategoryRestControllerTest extends HealthometerTestSupport {
+public class MeasurementRestControllerTest extends HealthometerTestSupport {
 
-    private String URL = "/targetCategories";
     private static String TOKEN = "";
+    private String URL = "/bodyMeasurements";
 
     @BeforeAll
     static void setup(@Autowired MockMvc mockMvc) {
-        val authDto = AuthDto.builder().username("user").password("password").valid(false).build();
+        val authDto = AuthDto.builder().username("admin").password("password").valid(false).build();
         try {
             TOKEN =
                     mockMvc
@@ -49,41 +51,43 @@ public class TargetCategoryRestControllerTest extends HealthometerTestSupport {
     }
 
     @Test
-    void getValidTargetCategory() {
-        assertEquals("Water", createGet(URL + "/1", TargetCategoryDto.class, TOKEN).getName());
+    void getValidMeasurement() {
+        assertAll(() -> createGet(URL + "/1", MeasurementDto.class, TOKEN));
+        //assertEquals("admin", createGet(URL + "/1", MeasurementDto.class, TOKEN).getUserDto().getUsername());
     }
 
     @Test
-    void getInvalidTargetCategory() {
-        assertNotEquals("g", createGet(URL + "/1", TargetCategoryDto.class, TOKEN).getUnitCategoryDto().getDefaultUnit());
+    void getInvalidMeasurement() {
+        assertThrows(Exception.class, () -> createGet(URL + "/100", MeasurementDto.class, TOKEN));
     }
 
     @Test
         //TODO
-    void createInvalidTargetCategory() {
-//    assertThrows(Exception.class, () ->  createPost(URL, getTargetCategory(), TargetCategoryDto.class, TOKEN));
-
-    }
-
-
-    @Test
-    void editInvalidTargetCategory() {
-        assertThrows(AssertionError.class, () ->  createPut(URL + "/1", getTargetCategory(), TargetCategoryDto.class, TOKEN));
-
+    void createValidMeasurement() {
+        assertAll(() -> createPost(URL, getMeasurement(), MeasurementDto.class, TOKEN));
     }
 
     @Test
-    void deleteInvalidTargetCategory() {
-
-        //assertThrows(Exception.class, () ->  createDelete(URL + "/1", TOKEN));
-        //assertAll( () ->  createDelete(URL + "/1", TOKEN));
+    void editValidMeasurement() {
+        assertAll(() -> createPut(URL + "/1", getMeasurement(), MeasurementDto.class, TOKEN));
     }
 
-    private TargetCategoryDto getTargetCategory(){
-        TargetCategoryDto targetCategoryDto=new TargetCategoryDto();
-        targetCategoryDto.setName("New target category");
-        targetCategoryDto.setDescription("New target category");
-        //targetCategoryDto.setUnitCategoryDto();
-        return targetCategoryDto;
+    @Test
+    void deleteValidMeasurement() {
+        assertAll(() -> createDelete(URL + "/1", TOKEN));
+    }
+
+    private MeasurementDto getMeasurement() {
+        MeasurementDto measurementDto = new MeasurementDto();
+        /*measurementDto.setName("New measurement ");
+        measurementDto.setDescription("New measurement ");
+        measurementDto.setUnitCategoryDto(getUnitCategory());*/
+        return measurementDto;
+    }
+
+    private UnitSubcategoryDto getUnitCategory() {
+        UnitSubcategoryDto unitSubcategoryDto = new UnitSubcategoryDto();
+        unitSubcategoryDto.setId(2l);
+        return unitSubcategoryDto;
     }
 }

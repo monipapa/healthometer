@@ -19,18 +19,18 @@ public abstract class HealthometerTestSupport {
   @Autowired protected MockMvc mockMvc;
 
   protected <INPUT, OUTPUT> OUTPUT createPost(
-      String url, INPUT dto, Class<OUTPUT> objectType, String token) {
+          String url, INPUT dto, Class<OUTPUT> objectType, String token) {
     OUTPUT resultDto = null;
     try {
       val result =
-          mockMvc
-              .perform(
-                  MockMvcRequestBuilders.post(url)
-                      .header("Authorization", token)
-                      .contentType(MediaType.APPLICATION_JSON)
-                      .content(JsonUtils.toJsonString(dto)))
-              .andExpect(status().isOk())
-              .andReturn();
+              mockMvc
+                      .perform(
+                              MockMvcRequestBuilders.post(url)
+                                      .header("Authorization", token)
+                                      .contentType(MediaType.APPLICATION_JSON)
+                                      .content(JsonUtils.toJsonString(dto)))
+                      .andExpect(status().isCreated())
+                      .andReturn();
 
       resultDto = JsonUtils.toObject(result.getResponse().getContentAsString(), objectType);
     } catch (Exception e) {
@@ -44,13 +44,13 @@ public abstract class HealthometerTestSupport {
     OUTPUT resultDto = null;
     try {
       val result =
-          mockMvc
-              .perform(
-                  MockMvcRequestBuilders.get(url)
-                      .header("Authorization", token)
-                      .contentType(MediaType.APPLICATION_JSON))
-              .andExpect(status().isOk())
-              .andReturn();
+              mockMvc
+                      .perform(
+                              MockMvcRequestBuilders.get(url)
+                                      .header("Authorization", token)
+                                      .contentType(MediaType.APPLICATION_JSON))
+                      .andExpect(status().isOk())
+                      .andReturn();
 
       resultDto = JsonUtils.toObject(result.getResponse().getContentAsString(), objectType);
     } catch (Exception e) {
@@ -61,18 +61,18 @@ public abstract class HealthometerTestSupport {
   }
 
   protected <INPUT, OUTPUT> OUTPUT createPut(
-      String url, INPUT dto, Class<OUTPUT> objectType, String token) {
+          String url, INPUT dto, Class<OUTPUT> objectType, String token) {
     OUTPUT resultDto = null;
     try {
       val result =
-          mockMvc
-              .perform(
-                  MockMvcRequestBuilders.put(url, "id")
-                      .header("Authorization", token)
-                      .contentType(MediaType.APPLICATION_JSON)
-                      .content(JsonUtils.toJsonString(dto)))
-              .andExpect(status().isOk())
-              .andReturn();
+              mockMvc
+                      .perform(
+                              MockMvcRequestBuilders.put(url, "id")
+                                      .header("Authorization", token)
+                                      .contentType(MediaType.APPLICATION_JSON)
+                                      .content(JsonUtils.toJsonString(dto)))
+                      .andExpect(status().isOk())
+                      .andReturn();
 
       resultDto = JsonUtils.toObject(result.getResponse().getContentAsString(), objectType);
     } catch (Exception e) {
@@ -84,13 +84,13 @@ public abstract class HealthometerTestSupport {
   protected void createDelete(String url, String token) {
     try {
       val result =
-          mockMvc
-              .perform(
-                  MockMvcRequestBuilders.delete(url)
-                      .header("Authorization", token)
-                      .contentType(MediaType.APPLICATION_JSON))
-              .andExpect(status().isOk())
-              .andReturn();
+              mockMvc
+                      .perform(
+                              MockMvcRequestBuilders.delete(url)
+                                      .header("Authorization", token)
+                                      .contentType(MediaType.APPLICATION_JSON))
+                      .andExpect(status().isNoContent())
+                      .andReturn();
 
     } catch (Exception e) {
       ExceptionUtils.rethrow(e);

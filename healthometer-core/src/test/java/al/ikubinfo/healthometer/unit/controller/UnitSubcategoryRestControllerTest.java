@@ -33,15 +33,15 @@ public class UnitSubcategoryRestControllerTest extends HealthometerTestSupport {
     val authDto = AuthDto.builder().username("admin").password("password").valid(false).build();
     try {
       TOKEN =
-          mockMvc
-              .perform(
-                  MockMvcRequestBuilders.post("/auth")
-                      .contentType(MediaType.APPLICATION_JSON)
-                      .content(JsonUtils.toJsonString(authDto)))
-              .andExpect(status().isOk())
-              .andReturn()
-              .getResponse()
-              .getHeader("Authorization");
+              mockMvc
+                      .perform(
+                              MockMvcRequestBuilders.post("/auth")
+                                      .contentType(MediaType.APPLICATION_JSON)
+                                      .content(JsonUtils.toJsonString(authDto)))
+                      .andExpect(status().isOk())
+                      .andReturn()
+                      .getResponse()
+                      .getHeader("Authorization");
 
     } catch (Exception e) {
       ExceptionUtils.rethrow(e);
@@ -63,33 +63,34 @@ public class UnitSubcategoryRestControllerTest extends HealthometerTestSupport {
 
   @Test
   void createInvalidUnitSubcategory() {
-    assertThrows(AssertionError.class, () ->  createPost(URL, getUnitSubcategory(), UnitSubcategoryDto.class, TOKEN));
+    assertThrows(Exception.class, () ->  createPost(URL, getUnitSubcategory(), UnitSubcategoryDto.class, TOKEN));
   }
 
 
   @Test
   void editInvalidUnitSubcategory() {
-    assertThrows(AssertionError.class, () ->  createPut(URL + "/1", getUnitSubcategory(), UnitSubcategoryDto.class, TOKEN));
+    assertAll(() ->  createPut(URL + "/1", getUnitSubcategory(), UnitSubcategoryDto.class, TOKEN));
 
   }
 
   @Test
   void deleteInvalidUnitSubcategory() {
-    assertThrows(AssertionError.class, () ->  createDelete(URL + "/1", TOKEN));
+    assertThrows(Exception.class, () ->  createDelete(URL + "/100", TOKEN));
   }
 
   @Test
+    //TODO Check
   void deleteValidUnitSubcategory() {
-    assertThrows(Exception.class, () -> createDelete(URL + "/100", TOKEN));
+    assertAll(() -> createDelete(URL + "/1", TOKEN));
   }
 
-    private UnitCategoryDto getUnitCategory(){
-      UnitCategoryDto unitCategoryDto=new UnitCategoryDto();
-      unitCategoryDto.setName("New measurement");
-      unitCategoryDto.setDescription("New measurement");
-      unitCategoryDto.setDefaultUnit("abb");
-      return unitCategoryDto;
-    }
+  private UnitCategoryDto getUnitCategory(){
+    UnitCategoryDto unitCategoryDto=new UnitCategoryDto();
+    unitCategoryDto.setName("New measurement");
+    unitCategoryDto.setDescription("New measurement");
+    unitCategoryDto.setDefaultUnit("abb");
+    return unitCategoryDto;
+  }
 
   private UnitSubcategoryDto getUnitSubcategory(){
     UnitSubcategoryDto unitSubcategoryDto=new UnitSubcategoryDto();
@@ -98,4 +99,4 @@ public class UnitSubcategoryRestControllerTest extends HealthometerTestSupport {
     unitSubcategoryDto.setAbbreviation("abb");
     return unitSubcategoryDto;
   }
-  }
+}

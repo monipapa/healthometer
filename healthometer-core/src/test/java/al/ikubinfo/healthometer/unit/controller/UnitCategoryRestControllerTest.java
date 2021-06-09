@@ -30,18 +30,18 @@ public class UnitCategoryRestControllerTest extends HealthometerTestSupport {
 
   @BeforeAll
   static void setup(@Autowired MockMvc mockMvc) {
-    val authDto = AuthDto.builder().username("user").password("password").valid(false).build();
+    val authDto = AuthDto.builder().username("admin").password("password").valid(false).build();
     try {
       TOKEN =
-          mockMvc
-              .perform(
-                  MockMvcRequestBuilders.post("/auth")
-                      .contentType(MediaType.APPLICATION_JSON)
-                      .content(JsonUtils.toJsonString(authDto)))
-              .andExpect(status().isOk())
-              .andReturn()
-              .getResponse()
-              .getHeader("Authorization");
+              mockMvc
+                      .perform(
+                              MockMvcRequestBuilders.post("/auth")
+                                      .contentType(MediaType.APPLICATION_JSON)
+                                      .content(JsonUtils.toJsonString(authDto)))
+                      .andExpect(status().isOk())
+                      .andReturn()
+                      .getResponse()
+                      .getHeader("Authorization");
 
     } catch (Exception e) {
       ExceptionUtils.rethrow(e);
@@ -51,39 +51,46 @@ public class UnitCategoryRestControllerTest extends HealthometerTestSupport {
 
   @Test
   void getValidUnitCategory() {
-    val response = createGet(URL + "/1", UnitCategoryDto.class, TOKEN);
-    assertEquals("Weight", response.getName());
+    assertEquals("Weight", createGet(URL + "/1", UnitCategoryDto.class, TOKEN).getName());
   }
 
   @Test
   void getInvalidUnitCategory() {
-    val response = createGet(URL + "/1", UnitCategoryDto.class, TOKEN);
-    assertNotEquals("g", response.getDefaultUnit());
+    assertNotEquals("g", createGet(URL + "/1", UnitCategoryDto.class, TOKEN).getDefaultUnit());
   }
 
   @Test
-  void createInvalidUnitCategory() {
-    assertThrows(AssertionError.class, () ->  createPost(URL, getUnitCategory(), UnitCategoryDto.class, TOKEN));
+  void getInvalidUnitCategory2() {
+    assertThrows(Exception.class, () -> createGet(URL + "/100", UnitCategoryDto.class, TOKEN));
+  }
+
+  @Test
+  void createValidUnitCategory() {
+    assertAll(() ->  createPost(URL, getUnitCategory(), UnitCategoryDto.class, TOKEN));
+  }
+
+  @Test
+  void editValidUnitCategory() {
+    assertAll(() ->  createPut(URL + "/500", getUnitCategory(), UnitCategoryDto.class, TOKEN));
+    // assertThrows(Exception.class, () ->  createPut(URL + "/500", getUnitCategory(), UnitCategoryDto.class, TOKEN));
 
   }
 
-
   @Test
-  void editIvnalidUnitCategory() {
-    assertThrows(AssertionError.class, () ->  createPut(URL + "/1", getUnitCategory(), UnitCategoryDto.class, TOKEN));
-
+  void deleteValidUnitCategory() {
+    assertAll( () ->  createDelete(URL + "/1", TOKEN));
   }
 
   @Test
   void deleteInvalidUnitCategory() {
-    assertThrows(AssertionError.class, () ->  createDelete(URL + "/1", TOKEN));
+    assertThrows(Exception.class, () ->  createDelete(URL + "/100", TOKEN));
   }
 
-    private UnitCategoryDto getUnitCategory(){
-      UnitCategoryDto unitCategoryDto=new UnitCategoryDto();
-      unitCategoryDto.setName("New measurement");
-      unitCategoryDto.setDescription("New measurement");
-      unitCategoryDto.setDefaultUnit("abb");
-      return unitCategoryDto;
-    }
+  private UnitCategoryDto getUnitCategory(){
+    UnitCategoryDto unitCategoryDto=new UnitCategoryDto();
+    unitCategoryDto.setName("New measurement");
+    unitCategoryDto.setDescription("New measurement");
+    unitCategoryDto.setDefaultUnit("abb");
+    return unitCategoryDto;
   }
+}

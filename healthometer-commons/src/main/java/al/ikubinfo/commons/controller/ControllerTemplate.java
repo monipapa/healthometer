@@ -42,7 +42,7 @@ public abstract class ControllerTemplate<
     protected ResponseEntity<DTO> update(
             @RequestBody DTO unitCategoryDto, @PathVariable Long id) {
         return new ResponseEntity<>(
-                (DTO) service.update(id, unitCategoryDto), HttpStatus.CREATED);
+                (DTO) service.update(id, unitCategoryDto), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
