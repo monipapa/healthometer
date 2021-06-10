@@ -2,6 +2,7 @@ package al.ikubinfo.healthometer.measurement.entity;
 
 import al.ikubinfo.commons.entity.BaseEntity;
 import al.ikubinfo.healthometer.unit.entity.UnitCategoryEntity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,5 +23,6 @@ public class MeasurementCategoryEntity extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "unit_categories_id", referencedColumnName = "id", nullable = false)
     @NotNull
+    @JsonBackReference
     private UnitCategoryEntity unitCategoryEntity;
 }

@@ -67,7 +67,7 @@ public class TargetTrackerService extends ServiceTemplate<
 
     public void checkIfLoggedUserIsAuthorized(Long userTargetId) {
         UserEntity loggedUser = userRepository.findByUsername(SecurityUtils.getCurrentUsername().get());
-        if (!loggedUser.getRole().getName().equals(Role.ADMIN)) {
+        if (!loggedUser.getRole().getName().equals(Role.ADMIN.getRole())) {
             if (userTargetId== null) {
                 throw new NotAuthorizedEx("Please contact the administrator!");
             }

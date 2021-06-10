@@ -23,12 +23,6 @@ public interface UserBidirectionalMapper
           @Mapping(source = "role", target = "roleDto"),
           @Mapping(source = "password", target = "password"),
           @Mapping(source = "status", target = "statusDto"),
-          @Mapping(source = "bmiMeasurements", target = "bmiMeasurements")
-          /*,
-    @Mapping(source = "dateCreated", target = "dateCreated"),
-    @Mapping(source = "dateUpdated", target = "dateUpdated"),
-    @Mapping(source = "userCreated", target = "userCreated"),
-    @Mapping(source = "userUpdated", target = "userUpdated")*/
   })
   UserDto toDto(UserEntity entity);
 

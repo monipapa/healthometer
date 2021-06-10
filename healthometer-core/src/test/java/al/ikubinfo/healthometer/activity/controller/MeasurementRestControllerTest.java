@@ -55,8 +55,7 @@ public class MeasurementRestControllerTest extends HealthometerTestSupport {
 
     @Test
     void getValidMeasurement() {
-        assertAll(() -> createGet(URL + "/1", MeasurementDto.class, TOKEN));
-        //assertEquals("admin", createGet(URL + "/1", MeasurementDto.class, TOKEN).getUserDto().getUsername());
+        assertEquals("admin", createGet(URL + "/1", MeasurementDto.class, TOKEN).getUserDto().getUsername());
     }
 
     @Test
@@ -83,12 +82,9 @@ public class MeasurementRestControllerTest extends HealthometerTestSupport {
     private MeasurementDto getMeasurement() {
         MeasurementDto measurementDto = new MeasurementDto();
         measurementDto.setValue(new BigDecimal(53));
-        //measurementDto.setBodyMeasurementCategoryDto(getMeasurementCategory());
-        //measurementDto.setUnitSubcategoryDto(getUnitSubcategory());
-        //measurementDto.setUserDto(getUser());
-        /*measurementDto.setName("New measurement ");
-        measurementDto.setDescription("New measurement ");
-        measurementDto.setUnitCategoryDto(getUnitCategory());*/
+        measurementDto.setBodyMeasurementCategoryDto(getMeasurementCategory());
+        measurementDto.setUnitSubcategoryDto(getUnitSubcategory());
+        measurementDto.setUserDto(getUser());
         return measurementDto;
     }
 

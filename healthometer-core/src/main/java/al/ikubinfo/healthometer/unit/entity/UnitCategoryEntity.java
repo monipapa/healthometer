@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 public class UnitCategoryEntity extends BaseEntity {
-    @OneToMany(mappedBy = "unitCategoryEntity", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "unitCategoryEntity")
     @JsonManagedReference
     List<UnitSubcategoryEntity> subcategoryEntityList;
 

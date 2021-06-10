@@ -43,9 +43,4 @@ public class UserEntity extends BaseEntity {
   @JoinColumn(name = "user_status_id")
   private StatusEntity status;
 
-  @OneToMany(mappedBy = "userEntity")
-  @Where(clause = "body_measurement_category_id=3")
-  //@JsonManagedReference
-  //@JsonIgnoreProperties("userEntity")
-  private List<MeasurementEntity> bmiMeasurements;
 }

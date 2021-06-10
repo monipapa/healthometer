@@ -64,7 +64,7 @@ public class TargetService extends ServiceTemplate<
     public void checkIfLoggedUserIsAuthorized(Long userId) {
         UserEntity loggedUser = userRepository.findByUsername(SecurityUtils.getCurrentUsername().get());
 
-        if (!loggedUser.getRole().getName().equals(Role.ADMIN)) {
+        if (!loggedUser.getRole().getName().equals(Role.ADMIN.getRole())) {
             if (loggedUser == null || !loggedUser.getId().equals(userId)) {
                 throw new NotAuthorizedEx("You are not authorized for this action! ");
             }
