@@ -17,6 +17,4 @@ public class UserDto extends BaseDto {
   private String password;
   private RoleDto roleDto = new RoleDto();
   private StatusDto statusDto = new StatusDto();
-  private List<MeasurementDto> bmiMeasurements;
-
 }
