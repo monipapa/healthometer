@@ -1,6 +1,7 @@
 package al.ikubinfo.healthometer.users.service;
 
 import al.ikubinfo.commons.security.SecurityUtils;
+import al.ikubinfo.commons.utils.UnitConverter;
 import al.ikubinfo.healthometer.activity.dto.MeasurementDto;
 import al.ikubinfo.healthometer.activity.entity.MeasurementEntity;
 import al.ikubinfo.healthometer.activity.service.MeasurementService;
@@ -32,6 +33,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.List;
@@ -141,17 +144,19 @@ public class UserService implements UserDetailsService {
 
   }
 
-  //TODO Query get last measurements
-  //BMI = kg/m2
   @Transactional
   public MeasurementDto calculateBmi(Long userId) {
-    //TODO static final fields
-    MeasurementEntity height = measurementService.getLastMeasurementPerUserPerCategory(userId, 3l);
+    MeasurementEntity height = measurementService.getLastMeasurementPerUserPerCategory(userId, 2l);
     MeasurementEntity weight = measurementService.getLastMeasurementPerUserPerCategory(userId, 1l);
+
     MeasurementDto dto = new MeasurementDto();
     dto.setUserDto(userBidirectionalMapper.toDto(userRepository.getOne(userId)));
     dto.setBodyMeasurementCategoryDto(measurementCategoryService.getSingle(3l));
-    dto.setValue(height.getValue().divide((weight.getValue().multiply(weight.getValue())), 2, RoundingMode.UP));
+
+    BigDecimal heightValue=UnitConverter.convertFromLengthUnitToUnit(height.getUnitSubcategoryEntity().getAbbreviation(),"m",height.getValue().doubleValue()).round(new MathContext(4));
+    BigDecimal weightValue=UnitConverter.convertFromMassUnitTo(weight.getUnitSubcategoryEntity().getAbbreviation(),"kg",weight.getValue().doubleValue()).round(new MathContext(4));
+
+    dto.setValue(weightValue.divide((heightValue.multiply(heightValue)), 2, RoundingMode.UP));
     return dto;
   }
 }
