@@ -22,7 +22,7 @@ public class MeasurementEntity extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     @NotNull
-    @JsonBackReference
+    //@JsonBackReference
     private UserEntity userEntity;
 
     @ManyToOne

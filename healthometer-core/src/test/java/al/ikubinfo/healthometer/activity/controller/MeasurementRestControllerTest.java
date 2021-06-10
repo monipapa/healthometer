@@ -8,6 +8,7 @@ import al.ikubinfo.healthometer.measurement.dto.MeasurementCategoryDto;
 import al.ikubinfo.healthometer.unit.dto.UnitCategoryDto;
 import al.ikubinfo.healthometer.unit.dto.UnitSubcategoryDto;
 import al.ikubinfo.healthometer.users.dto.AuthDto;
+import al.ikubinfo.healthometer.users.dto.UserDto;
 import lombok.val;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.junit.jupiter.api.BeforeAll;
@@ -18,6 +19,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -79,15 +82,31 @@ public class MeasurementRestControllerTest extends HealthometerTestSupport {
 
     private MeasurementDto getMeasurement() {
         MeasurementDto measurementDto = new MeasurementDto();
+        measurementDto.setValue(new BigDecimal(53));
+        //measurementDto.setBodyMeasurementCategoryDto(getMeasurementCategory());
+        //measurementDto.setUnitSubcategoryDto(getUnitSubcategory());
+        //measurementDto.setUserDto(getUser());
         /*measurementDto.setName("New measurement ");
         measurementDto.setDescription("New measurement ");
         measurementDto.setUnitCategoryDto(getUnitCategory());*/
         return measurementDto;
     }
 
-    private UnitSubcategoryDto getUnitCategory() {
+    private UnitSubcategoryDto getUnitSubcategory() {
         UnitSubcategoryDto unitSubcategoryDto = new UnitSubcategoryDto();
-        unitSubcategoryDto.setId(2l);
+        unitSubcategoryDto.setId(1l);
         return unitSubcategoryDto;
+    }
+
+    private MeasurementCategoryDto getMeasurementCategory() {
+        MeasurementCategoryDto measurementCategoryDto = new MeasurementCategoryDto();
+        measurementCategoryDto.setId(1l);
+        return measurementCategoryDto;
+    }
+
+    private UserDto getUser() {
+        UserDto userDto = new UserDto();
+        userDto.setId(1l);
+        return userDto;
     }
 }
