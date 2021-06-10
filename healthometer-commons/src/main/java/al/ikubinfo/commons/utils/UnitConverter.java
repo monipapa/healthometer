@@ -80,7 +80,7 @@ public final class UnitConverter {
         } else if (unit.equalsIgnoreCase("km")) {
             return LENGTH_KILOMETERS * meters;
         } else {
-            throw new NotImplementedEx("This unit is not implemented , " + unit);
+            throw new NotImplementedEx("This unit is not implemented , " + unit + ". Please contact the administrator!");
         }
     }
 
@@ -93,24 +93,22 @@ public final class UnitConverter {
         } else if (unit.equalsIgnoreCase("oz")) {
             return MASS_OUNCE * grams;
         } else if (unit.equalsIgnoreCase("kg")) {
-            return MASS_KILOGRAM  * grams;
+            return MASS_KILOGRAM * grams;
         } else if (unit.equalsIgnoreCase("lb")) {
             return MASS_POUND * grams;
         } else if (unit.equalsIgnoreCase("st")) {
             return MASS_STONE * grams;
         } else {
-            throw new NotImplementedEx("This unit is not implemented , " + unit);
+            throw new NotImplementedEx("This unit is not implemented, " + unit + ". Please contact the administrator!");
         }
     }
 
     public static BigDecimal convertFromLengthUnitToUnit(String fromUnit, String toUnit, double value) {
-        System.out.println(" HEIGHT fromUnit : "+fromUnit+" toUnit : "+toUnit+" value : "+value);
         Double meters = toMeters(fromUnit, value);
         return new BigDecimal(fromMeters(toUnit, meters));
     }
 
     public static BigDecimal convertFromMassUnitTo(String fromUnit, String toUnit, double value) {
-        System.out.println(" Weight fromUnit : "+fromUnit+" toUnit : "+toUnit+" value : "+value);
         Double grams = toGrams(fromUnit, value);
         return new BigDecimal(fromGrams(toUnit, grams));
     }
