@@ -4,7 +4,6 @@ import al.ikubinfo.commons.dto.BaseDto;
 import al.ikubinfo.healthometer.measurement.dto.MeasurementCategoryDto;
 import al.ikubinfo.healthometer.unit.dto.UnitSubcategoryDto;
 import al.ikubinfo.healthometer.users.dto.UserDto;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,5 +16,4 @@ public class MeasurementDto extends BaseDto {
     private MeasurementCategoryDto bodyMeasurementCategoryDto;
     private UnitSubcategoryDto unitSubcategoryDto;
     private BigDecimal value;
-
 }

@@ -10,14 +10,19 @@ import al.ikubinfo.healthometer.target.repository.specification.TargetCategorySp
 import org.springframework.stereotype.Service;
 
 @Service
-public class TargetCategoryService extends ServiceTemplate<TargetCategoryEntity,
+public class TargetCategoryService
+        extends ServiceTemplate<
+        TargetCategoryEntity,
         TargetCategoryDto,
         TargetCategoryMapper,
         TargetCategoryRepository,
         TargetCategoryCriteria,
         TargetCategorySpecificationBuilder> {
 
-    public TargetCategoryService(TargetCategoryRepository repository, TargetCategoryMapper mapper, TargetCategorySpecificationBuilder specificationBuilder) {
+    public TargetCategoryService(
+            TargetCategoryRepository repository,
+            TargetCategoryMapper mapper,
+            TargetCategorySpecificationBuilder specificationBuilder) {
         super(repository, mapper, specificationBuilder);
     }
 }

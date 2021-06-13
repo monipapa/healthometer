@@ -10,9 +10,9 @@ import java.time.LocalDateTime;
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class BaseDto {
-    protected Long id;
-    protected LocalDateTime dateCreated;
-    protected LocalDateTime dateUpdated;
-    protected String userCreated;
-    protected String userUpdated;
+  protected Long id;
+  protected LocalDateTime dateCreated;
+  protected LocalDateTime dateUpdated;
+  protected String userCreated;
+  protected String userUpdated;
 }

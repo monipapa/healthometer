@@ -1,5 +1,8 @@
 package al.ikubinfo.healthometer.unit.controller;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import al.ikubinfo.commons.utils.JsonUtils;
 import al.ikubinfo.healthometer.HealthometerApp;
 import al.ikubinfo.healthometer.HealthometerTestSupport;
@@ -13,13 +16,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Transactional;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(classes = HealthometerApp.class)
 @Transactional
@@ -33,15 +32,15 @@ public class UnitSubcategoryRestControllerTest extends HealthometerTestSupport {
     val authDto = AuthDto.builder().username("admin").password("password").valid(false).build();
     try {
       TOKEN =
-              mockMvc
-                      .perform(
-                              MockMvcRequestBuilders.post("/auth")
-                                      .contentType(MediaType.APPLICATION_JSON)
-                                      .content(JsonUtils.toJsonString(authDto)))
-                      .andExpect(status().isOk())
-                      .andReturn()
-                      .getResponse()
-                      .getHeader("Authorization");
+          mockMvc
+              .perform(
+                  MockMvcRequestBuilders.post("/auth")
+                      .contentType(MediaType.APPLICATION_JSON)
+                      .content(JsonUtils.toJsonString(authDto)))
+              .andExpect(status().isOk())
+              .andReturn()
+              .getResponse()
+              .getHeader("Authorization");
 
     } catch (Exception e) {
       ExceptionUtils.rethrow(e);
@@ -63,37 +62,37 @@ public class UnitSubcategoryRestControllerTest extends HealthometerTestSupport {
 
   @Test
   void createInvalidUnitSubcategory() {
-    assertThrows(Exception.class, () ->  createPost(URL, getUnitSubcategory(), UnitSubcategoryDto.class, TOKEN));
+    assertThrows(
+        Exception.class,
+        () -> createPost(URL, getUnitSubcategory(), UnitSubcategoryDto.class, TOKEN));
   }
-
 
   @Test
   void editInvalidUnitSubcategory() {
-    assertAll(() ->  createPut(URL + "/1", getUnitSubcategory(), UnitSubcategoryDto.class, TOKEN));
-
+    assertAll(() -> createPut(URL + "/1", getUnitSubcategory(), UnitSubcategoryDto.class, TOKEN));
   }
 
   @Test
   void deleteInvalidUnitSubcategory() {
-    assertThrows(Exception.class, () ->  createDelete(URL + "/100", TOKEN));
+    assertThrows(Exception.class, () -> createDelete(URL + "/100", TOKEN));
   }
 
   @Test
-    //TODO Check
+  // TODO Check
   void deleteValidUnitSubcategory() {
     assertAll(() -> createDelete(URL + "/1", TOKEN));
   }
 
-  private UnitCategoryDto getUnitCategory(){
-    UnitCategoryDto unitCategoryDto=new UnitCategoryDto();
+  private UnitCategoryDto getUnitCategory() {
+    UnitCategoryDto unitCategoryDto = new UnitCategoryDto();
     unitCategoryDto.setName("New measurement");
     unitCategoryDto.setDescription("New measurement");
     unitCategoryDto.setDefaultUnit("abb");
     return unitCategoryDto;
   }
 
-  private UnitSubcategoryDto getUnitSubcategory(){
-    UnitSubcategoryDto unitSubcategoryDto=new UnitSubcategoryDto();
+  private UnitSubcategoryDto getUnitSubcategory() {
+    UnitSubcategoryDto unitSubcategoryDto = new UnitSubcategoryDto();
     unitSubcategoryDto.setName("New measurement");
     unitSubcategoryDto.setUnitCategoryDto(getUnitCategory());
     unitSubcategoryDto.setAbbreviation("abb");

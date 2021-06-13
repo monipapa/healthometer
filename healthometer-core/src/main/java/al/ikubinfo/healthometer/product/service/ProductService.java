@@ -10,7 +10,8 @@ import al.ikubinfo.healthometer.product.repository.specification.ProductSpecific
 import org.springframework.stereotype.Service;
 
 @Service
-public class ProductService extends ServiceTemplate<
+public class ProductService
+        extends ServiceTemplate<
         ProductEntity,
         ProductDto,
         ProductMapper,
@@ -18,7 +19,10 @@ public class ProductService extends ServiceTemplate<
         ProductCriteria,
         ProductSpecificationBuilder> {
 
-    public ProductService(ProductRepository repository, ProductMapper mapper, ProductSpecificationBuilder specificationBuilder) {
+    public ProductService(
+            ProductRepository repository,
+            ProductMapper mapper,
+            ProductSpecificationBuilder specificationBuilder) {
         super(repository, mapper, specificationBuilder);
     }
 }

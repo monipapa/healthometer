@@ -9,7 +9,6 @@ import org.mapstruct.*;
     componentModel = "spring",
     uses = {RoleBidirectionalMapper.class, StatusBidirectionalMapper.class},
     nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-
 public interface UserBidirectionalMapper
     extends DtoToEntityBidirectionalMapper<UserDto, UserEntity> {
 

@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("unitSubcategories")
-public class UnitSubcategoryController extends ControllerTemplate<UnitSubcategoryDto, UnitSubcategoryCriteria, UnitSubcategoryService> {
+public class UnitSubcategoryController
+        extends ControllerTemplate<
+        UnitSubcategoryDto, UnitSubcategoryCriteria, UnitSubcategoryService> {
 
-    public UnitSubcategoryController(UnitSubcategoryService unitSubcategoryService) {
-        super(unitSubcategoryService);
-    }
+  public UnitSubcategoryController(UnitSubcategoryService unitSubcategoryService) {
+    super(unitSubcategoryService);
+  }
 }

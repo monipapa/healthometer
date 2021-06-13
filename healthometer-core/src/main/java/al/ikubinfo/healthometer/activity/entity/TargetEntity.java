@@ -5,32 +5,31 @@ import al.ikubinfo.healthometer.target.entity.TargetCategoryEntity;
 import al.ikubinfo.healthometer.unit.entity.UnitSubcategoryEntity;
 import al.ikubinfo.healthometer.users.entity.UserEntity;
 import com.sun.istack.NotNull;
+import java.math.BigDecimal;
+import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.persistence.*;
-import java.math.BigDecimal;
 
 @Entity
 @Table(schema = "healthometer", name = "user_target_category")
 @Getter
 @Setter
 public class TargetEntity extends BaseEntity {
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    @NotNull
-    private UserEntity userEntity;
+  @ManyToOne
+  @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+  @NotNull
+  private UserEntity userEntity;
 
-    @ManyToOne
-    @JoinColumn(name = "target_category_id", referencedColumnName = "id", nullable = false)
-    @NotNull
-    private TargetCategoryEntity targetCategoryEntity;
+  @ManyToOne
+  @JoinColumn(name = "target_category_id", referencedColumnName = "id", nullable = false)
+  @NotNull
+  private TargetCategoryEntity targetCategoryEntity;
 
-    @ManyToOne
-    @JoinColumn(name = "unit_subcategories_id", referencedColumnName = "id", nullable = false)
-    @NotNull
-    private UnitSubcategoryEntity unitSubcategoryEntity;
+  @ManyToOne
+  @JoinColumn(name = "unit_subcategories_id", referencedColumnName = "id", nullable = false)
+  @NotNull
+  private UnitSubcategoryEntity unitSubcategoryEntity;
 
-    @Column(name = "target_value")
-    private BigDecimal targetValue;
+  @Column(name = "target_value")
+  private BigDecimal targetValue;
 }

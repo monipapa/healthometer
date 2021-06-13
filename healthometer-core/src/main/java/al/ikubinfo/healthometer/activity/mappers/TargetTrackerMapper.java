@@ -10,22 +10,22 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.springframework.stereotype.Component;
 
 @Mapper(
-        componentModel = "spring",
-        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    componentModel = "spring",
+    nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 @Component
 public interface TargetTrackerMapper
-        extends DtoToEntityBidirectionalMapper<TargetTrackerDto, TargetTrackerEntity> {
+    extends DtoToEntityBidirectionalMapper<TargetTrackerDto, TargetTrackerEntity> {
 
-    @Override
-    @InheritInverseConfiguration
-    TargetTrackerEntity toEntity(TargetTrackerDto dto);
+  @Override
+  @InheritInverseConfiguration
+  TargetTrackerEntity toEntity(TargetTrackerDto dto);
 
-    @Override
-    @Mapping(target = "id", source = "id")
-    @Mapping(target = "userTargetCategoryDto", source = "userTargetCategoryEntity")
-    @Mapping(target = "productDto", source = "productEntity")
-    @Mapping(target = "unitSubcategoryDto", source = "unitSubcategoryEntity")
-    @Mapping(target = "unit", source = "unit")
-    @Mapping(target = "unitValue", source = "unitValue")
-    TargetTrackerDto toDto(TargetTrackerEntity entity);
+  @Override
+  @Mapping(target = "id", source = "id")
+  @Mapping(target = "userTargetCategoryDto", source = "userTargetCategoryEntity")
+  @Mapping(target = "productDto", source = "productEntity")
+  @Mapping(target = "unitSubcategoryDto", source = "unitSubcategoryEntity")
+  @Mapping(target = "unit", source = "unit")
+  @Mapping(target = "unitValue", source = "unitValue")
+  TargetTrackerDto toDto(TargetTrackerEntity entity);
 }

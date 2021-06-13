@@ -1,13 +1,7 @@
 package al.ikubinfo.healthometer;
 
-import static springfox.documentation.schema.AlternateTypeRules.newRule;
-
 import com.fasterxml.classmate.TypeResolver;
 import com.google.common.collect.Lists;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +25,13 @@ import springfox.documentation.swagger.web.SecurityConfiguration;
 import springfox.documentation.swagger.web.SecurityConfigurationBuilder;
 import springfox.documentation.swagger.web.SwaggerResource;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
+
+import static springfox.documentation.schema.AlternateTypeRules.newRule;
 
 @EnableSwagger2
 @Configuration

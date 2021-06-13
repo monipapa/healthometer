@@ -42,8 +42,8 @@ public class CustomExceptionHandler {
                     NotFoundEx.class,
                     DatabaseEx.class,
                     NotAuthorizedEx.class,
-                    NotImplementedEx.class//,
-                    //Exception.class
+                    NotImplementedEx.class,
+                    Exception.class
             })
     protected ResponseEntity<Object> handleCustomExceptions(RuntimeException ex, WebRequest request) {
         ErrorFormat errorBody = new ErrorFormat();

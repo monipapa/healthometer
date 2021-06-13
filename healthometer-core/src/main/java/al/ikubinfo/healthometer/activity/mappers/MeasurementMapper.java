@@ -7,21 +7,21 @@ import org.mapstruct.*;
 import org.springframework.stereotype.Component;
 
 @Mapper(
-        componentModel = "spring",
-        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    componentModel = "spring",
+    nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 @Component
 public interface MeasurementMapper
-        extends DtoToEntityBidirectionalMapper<MeasurementDto, MeasurementEntity> {
+    extends DtoToEntityBidirectionalMapper<MeasurementDto, MeasurementEntity> {
 
-    @Override
-    @InheritInverseConfiguration
-    MeasurementEntity toEntity(MeasurementDto dto);
+  @Override
+  @InheritInverseConfiguration
+  MeasurementEntity toEntity(MeasurementDto dto);
 
-    @Override
-    @Mapping(target = "id", source = "id")
-    @Mapping(target = "userDto", source = "userEntity")
-    @Mapping(target = "bodyMeasurementCategoryDto", source = "bodyMeasurementCategoryEntity")
-    @Mapping(target = "unitSubcategoryDto", source = "unitSubcategoryEntity")
-    @Mapping(target = "value", source = "value")
-    MeasurementDto toDto(MeasurementEntity entity);
+  @Override
+  @Mapping(target = "id", source = "id")
+  @Mapping(target = "userDto", source = "userEntity")
+  @Mapping(target = "bodyMeasurementCategoryDto", source = "bodyMeasurementCategoryEntity")
+  @Mapping(target = "unitSubcategoryDto", source = "unitSubcategoryEntity")
+  @Mapping(target = "value", source = "value")
+  MeasurementDto toDto(MeasurementEntity entity);
 }

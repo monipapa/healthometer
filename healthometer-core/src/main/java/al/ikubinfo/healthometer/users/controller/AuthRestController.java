@@ -4,7 +4,6 @@ import al.ikubinfo.healthometer.users.dto.AuthDto;
 import al.ikubinfo.healthometer.users.security.JWTFilter;
 import al.ikubinfo.healthometer.users.service.AuthService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 public class AuthRestController {
 
-  @Autowired private AuthService authService;
+  private AuthService authService;
 
   @PostMapping(value = "")
   public ResponseEntity<AuthDto> authorize(@RequestBody AuthDto authDto) {

@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("targetCategories")
-public class TargetCategoryController extends ControllerTemplate<TargetCategoryDto, TargetCategoryCriteria, TargetCategoryService> {
-    public TargetCategoryController(TargetCategoryService service) {
-        super(service);
-    }
+public class TargetCategoryController
+        extends ControllerTemplate<TargetCategoryDto, TargetCategoryCriteria, TargetCategoryService> {
+  public TargetCategoryController(TargetCategoryService service) {
+    super(service);
+  }
 }

@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("products")
-public class ProductController extends ControllerTemplate<ProductDto, ProductCriteria, ProductService> {
+public class ProductController
+        extends ControllerTemplate<ProductDto, ProductCriteria, ProductService> {
     public ProductController(ProductService productService) {
         super(productService);
     }

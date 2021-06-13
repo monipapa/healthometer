@@ -9,9 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("measurementCategories")
-public class MeasurementCategoryController extends ControllerTemplate<MeasurementCategoryDto, MeasurementCategoryCriteria,
-        MeasurementCategoryService> {
-    public MeasurementCategoryController(MeasurementCategoryService measurementCategoryService) {
-        super(measurementCategoryService);
-    }
+public class MeasurementCategoryController
+        extends ControllerTemplate<
+        MeasurementCategoryDto, MeasurementCategoryCriteria, MeasurementCategoryService> {
+  public MeasurementCategoryController(MeasurementCategoryService measurementCategoryService) {
+    super(measurementCategoryService);
+  }
 }

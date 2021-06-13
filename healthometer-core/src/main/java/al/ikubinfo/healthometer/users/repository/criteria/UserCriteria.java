@@ -7,10 +7,10 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class UserCriteria extends BaseCriteria {
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String username;
-    private Long roleId;
-    private Long statusId;
+  private String firstName;
+  private String lastName;
+  private String email;
+  private String username;
+  private Long roleId;
+  private Long statusId;
 }

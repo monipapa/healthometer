@@ -10,12 +10,19 @@ import al.ikubinfo.healthometer.unit.repository.specification.UnitCategorySpecif
 import org.springframework.stereotype.Service;
 
 @Service
-//TODO
 public class UnitCategoryService
         extends ServiceTemplate<
-        UnitCategoryEntity, UnitCategoryDto, UnitCategoryMapper, UnitCategoryRepository, UnitCategoryCriteria, UnitCategorySpecificationBuilder> {
+        UnitCategoryEntity,
+        UnitCategoryDto,
+        UnitCategoryMapper,
+        UnitCategoryRepository,
+        UnitCategoryCriteria,
+        UnitCategorySpecificationBuilder> {
 
-    public UnitCategoryService(UnitCategoryRepository repository, UnitCategoryMapper mapper, UnitCategorySpecificationBuilder specificationBuilder) {
-        super(repository, mapper, specificationBuilder);
-    }
+  public UnitCategoryService(
+          UnitCategoryRepository repository,
+          UnitCategoryMapper mapper,
+          UnitCategorySpecificationBuilder specificationBuilder) {
+    super(repository, mapper, specificationBuilder);
+  }
 }

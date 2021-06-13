@@ -1,11 +1,8 @@
 package al.ikubinfo.healthometer.users.dto;
 
 import al.ikubinfo.commons.dto.BaseDto;
-import al.ikubinfo.healthometer.activity.dto.MeasurementDto;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.List;
 
 @Getter
 @Setter

@@ -11,13 +11,17 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MeasurementCategoryService
-        extends ServiceTemplate<MeasurementCategoryEntity,
+        extends ServiceTemplate<
+        MeasurementCategoryEntity,
         MeasurementCategoryDto,
         MeasurementCategoryMapper,
         MeasurementCategoryRepository,
         MeasurementCategoryCriteria,
         MeasurementCategorySpecificationBuilder> {
-    public MeasurementCategoryService(MeasurementCategoryRepository repository, MeasurementCategoryMapper mapper, MeasurementCategorySpecificationBuilder specificationBuilder) {
+    public MeasurementCategoryService(
+            MeasurementCategoryRepository repository,
+            MeasurementCategoryMapper mapper,
+            MeasurementCategorySpecificationBuilder specificationBuilder) {
         super(repository, mapper, specificationBuilder);
     }
 }

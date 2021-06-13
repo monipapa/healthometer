@@ -10,21 +10,20 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.springframework.stereotype.Component;
 
 @Mapper(
-        componentModel = "spring",
-        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    componentModel = "spring",
+    nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 @Component
-public interface ProductMapper
-        extends DtoToEntityBidirectionalMapper<ProductDto, ProductEntity> {
+public interface ProductMapper extends DtoToEntityBidirectionalMapper<ProductDto, ProductEntity> {
 
-    @Override
-    @InheritInverseConfiguration
-    ProductEntity toEntity(ProductDto dto);
+  @Override
+  @InheritInverseConfiguration
+  ProductEntity toEntity(ProductDto dto);
 
-    @Override
-    @Mapping(target = "id", source = "id")
-    @Mapping(target = "name", source = "name")
-    @Mapping(target = "targetCategoryDto", source = "targetCategoryEntity")
-    @Mapping(target = "unitSubcategoryDto", source = "unitSubcategoryEntity")
-    @Mapping(target = "amountValue", source = "amountValue")
-    ProductDto toDto(ProductEntity entity);
+  @Override
+  @Mapping(target = "id", source = "id")
+  @Mapping(target = "name", source = "name")
+  @Mapping(target = "targetCategoryDto", source = "targetCategoryEntity")
+  @Mapping(target = "unitSubcategoryDto", source = "unitSubcategoryEntity")
+  @Mapping(target = "amountValue", source = "amountValue")
+  ProductDto toDto(ProductEntity entity);
 }

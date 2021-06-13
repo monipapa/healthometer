@@ -1,12 +1,13 @@
 package al.ikubinfo.healthometer.users.entity;
 
 import al.ikubinfo.commons.entity.BaseEntity;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @Table(schema = "healthometer", name = "status")

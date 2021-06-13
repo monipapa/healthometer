@@ -1,6 +1,5 @@
 package al.ikubinfo.healthometer.users.controller;
 
-import al.ikubinfo.healthometer.activity.dto.BmiDto;
 import al.ikubinfo.healthometer.activity.dto.MeasurementDto;
 import al.ikubinfo.healthometer.users.dto.PasswordDto;
 import al.ikubinfo.healthometer.users.dto.UserDto;

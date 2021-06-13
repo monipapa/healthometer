@@ -10,21 +10,20 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.springframework.stereotype.Component;
 
 @Mapper(
-        componentModel = "spring",
-        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    componentModel = "spring",
+    nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 @Component
 public interface MeasurementCategoryMapper
-        extends DtoToEntityBidirectionalMapper<
-        MeasurementCategoryDto, MeasurementCategoryEntity> {
+    extends DtoToEntityBidirectionalMapper<MeasurementCategoryDto, MeasurementCategoryEntity> {
 
-    @Override
-    @InheritInverseConfiguration
-    MeasurementCategoryEntity toEntity(MeasurementCategoryDto dto);
+  @Override
+  @InheritInverseConfiguration
+  MeasurementCategoryEntity toEntity(MeasurementCategoryDto dto);
 
-    @Override
-    @Mapping(target = "id", source = "id")
-    @Mapping(target = "name", source = "name")
-    @Mapping(target = "description", source = "description")
-    @Mapping(target = "unitCategoryDto", source = "unitCategoryEntity")
-    MeasurementCategoryDto toDto(MeasurementCategoryEntity unitCategoryEntity);
+  @Override
+  @Mapping(target = "id", source = "id")
+  @Mapping(target = "name", source = "name")
+  @Mapping(target = "description", source = "description")
+  @Mapping(target = "unitCategoryDto", source = "unitCategoryEntity")
+  MeasurementCategoryDto toDto(MeasurementCategoryEntity unitCategoryEntity);
 }
