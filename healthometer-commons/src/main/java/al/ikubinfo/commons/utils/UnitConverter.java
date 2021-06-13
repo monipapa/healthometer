@@ -23,7 +23,6 @@ public final class UnitConverter {
   private static double MASS_OUNCE = 0.035274;
 
   private static double toMeters(String unit, Double val) {
-    System.out.println("-----4 -----");
 
     if (unit.equalsIgnoreCase("in")) {
       return (val / LENGTH_INCHES);
@@ -45,7 +44,6 @@ public final class UnitConverter {
   }
 
   private static double toGrams(String unit, Double val) {
-    System.out.println("-----3 -----");
 
     if (unit.equalsIgnoreCase("g") || unit.equalsIgnoreCase("gm")) {
       return (val / MASS_GRAM);
@@ -65,7 +63,6 @@ public final class UnitConverter {
   }
 
   private static double fromMeters(String unit, Double meters) {
-    System.out.println("-----2 -----");
 
     if (unit.equalsIgnoreCase("in")) {
       return LENGTH_INCHES * 100 * meters;
@@ -88,7 +85,6 @@ public final class UnitConverter {
   }
 
   private static double fromGrams(String unit, Double grams) {
-    System.out.println("-----1 -----");
     if (unit.equalsIgnoreCase("g")) {
       return MASS_GRAM * grams;
     } else if (unit.equalsIgnoreCase("mg")) {

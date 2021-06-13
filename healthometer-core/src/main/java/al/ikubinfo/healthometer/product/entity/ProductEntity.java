@@ -28,5 +28,6 @@ public class ProductEntity extends BaseEntity {
   private UnitSubcategoryEntity unitSubcategoryEntity;
 
   @Column(name = "amount_value")
+  @NotNull
   private BigDecimal amountValue;
 }

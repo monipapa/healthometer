@@ -2,8 +2,8 @@ CREATE TABLE healthometer.user_target_tracker
 (
     id                      serial PRIMARY KEY,
     user_target_category_id integer NOT NULL,
-    product_id              integer,
-    unit                    decimal,
+    product_id              integer NOT NULL,
+    unit                    decimal NOT NULL,
     unit_subcategories_id   integer,
     unit_value              decimal,
     date_created            timestamp,

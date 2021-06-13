@@ -115,18 +115,18 @@ public abstract class ServiceTemplate<
             : repository.findAll(pageable);
   }
 
-  public void doGetList() {
+  protected void doGetList() {
   }
 
-  public void doGetSingle(ENTITY entity) {
+  protected void doGetSingle(ENTITY entity) {
   }
 
-  public void doSave(ENTITY entity) {
+  protected void doSave(ENTITY entity) {
   }
 
-  public void doUpdate(ENTITY entity) {
+  protected void doUpdate(ENTITY entity) {
   }
 
-  public void doDelete(ENTITY entity) {
+  protected void doDelete(ENTITY entity) {
   }
 }

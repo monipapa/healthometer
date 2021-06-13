@@ -30,6 +30,7 @@ public class TargetTrackerEntity extends BaseEntity {
   private UnitSubcategoryEntity unitSubcategoryEntity;
 
   @Column(name = "unit")
+  @NotNull
   private BigDecimal unit;
 
   @Column(name = "unit_value")

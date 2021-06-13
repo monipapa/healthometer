@@ -2,6 +2,7 @@ package al.ikubinfo.healthometer;
 
 import al.ikubinfo.commons.entity.ErrorFormat;
 import al.ikubinfo.commons.exception.*;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,7 +45,8 @@ public class CustomExceptionHandler {
                     DatabaseEx.class,
                     NotAuthorizedEx.class,
                     NotImplementedEx.class,
-                    Exception.class
+                    DataIntegrityViolationException.class,
+                    EntityNotFoundException.class
             })
     protected ResponseEntity<Object> handleCustomExceptions(RuntimeException ex, WebRequest request) {
         ErrorFormat errorBody = new ErrorFormat();

@@ -49,6 +49,7 @@ public class TargetTrackerService
   @Override
   public void doSave(TargetTrackerEntity entity) {
     checkIfLoggedUserIsAuthorized(entity.getUserTargetCategoryEntity().getId());
+    entity.setUnitValue(entity.getUnit().multiply(entity.getProductEntity().getAmountValue()));
     super.doSave(entity);
   }
 
