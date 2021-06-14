@@ -13,6 +13,8 @@ import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @AllArgsConstructor
 public abstract class ControllerTemplate<
     DTO extends BaseDto, CRITERIA extends BaseCriteria, SERVICE extends ServiceTemplate> {
@@ -30,12 +32,12 @@ public abstract class ControllerTemplate<
   }
 
   @PostMapping
-  protected ResponseEntity<DTO> save(@RequestBody @NotNull DTO dto) {
+  protected ResponseEntity<DTO> save(@Valid @RequestBody @NotNull DTO dto) {
     return new ResponseEntity<>((DTO) service.save(dto), HttpStatus.CREATED);
   }
 
   @PutMapping("/{id}")
-  protected ResponseEntity<DTO> update(@RequestBody DTO unitCategoryDto, @PathVariable Long id) {
+  protected ResponseEntity<DTO> update(@Valid @RequestBody DTO unitCategoryDto, @PathVariable Long id) {
     return new ResponseEntity<>((DTO) service.update(id, unitCategoryDto), HttpStatus.OK);
   }
 

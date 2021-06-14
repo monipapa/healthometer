@@ -1,5 +1,6 @@
 package al.ikubinfo.healthometer.activity.service;
 
+import al.ikubinfo.commons.exception.BadRequestEx;
 import al.ikubinfo.commons.exception.NotAuthorizedEx;
 import al.ikubinfo.commons.security.SecurityUtils;
 import al.ikubinfo.commons.service.ServiceTemplate;
